@@ -18,7 +18,7 @@ const styles = theme => ({
 
     onDelete(id) {
         deleteCategory(id)
-            .then((data) => {
+            .then((even) => {
                 let categories = this.state.categories.filter((category) => {
                     return id !== category.id;
                 });

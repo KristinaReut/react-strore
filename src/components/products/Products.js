@@ -126,7 +126,7 @@ class Products extends Component {
         </TableBody>
       </Table>
     </Paper>
-    <form className={classes.container} noValidate autoComplete="off" onClick={this.handleSubmit}>
+    <form className={classes.container} noValidate autoComplete="off" onSubmit={this.handleSubmit} >
     <TextField
           required
           label="Name"
