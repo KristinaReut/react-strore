@@ -44,7 +44,8 @@ const styles = theme => ({
 
 class Products extends Component {
   state = {
-    product: '',
+    products: [],
+    name: '',
     price: '',
     color: '',
     description: '',
@@ -75,7 +76,7 @@ class Products extends Component {
 
   render() {
     const {classes} = this.props;
-    const { name, price, color, description, category, image } = this.state;
+    const { products, name, price, color, description, category, image } = this.state;
     return (
       <div>
         <form className={classes.container} noValidate autoComplete="off" >
@@ -116,9 +117,9 @@ class Products extends Component {
         <TableBody>
         {
                 products.map((product, index) => (
-                  <CategoriesTableRow
+                  <ProductsTableRow
                     index={index}
-                    category={category}
+                    product={product}
                   />
                 ))
               }
@@ -131,7 +132,7 @@ class Products extends Component {
           label="Name"
           className={classes.textField}
           margin="normal"
-          value={this.state.name}
+          value={name}
           onChange={this.handleChange('name')}
         />
    <TextField
@@ -140,14 +141,14 @@ class Products extends Component {
           type="number"
           className={classes.textField}
           margin="normal"
-          value={this.state.price}
+          value={price}
           onChange={this.handleChange('price')}
         />
        <TextField
           label="Description"
           className={classes.textField}
           margin="normal"
-          value={this.state.description}
+          value={description}
           onChange={this.handleChange('description')}
         />
         <TextField
@@ -161,7 +162,7 @@ class Products extends Component {
             },
           }}
           margin="normal"
-          value={this.state.category}
+          value={category}
           onChange={this.handleChange('category')}
         />
         <TextField
@@ -170,7 +171,7 @@ class Products extends Component {
           type="url"
           className={classes.textField}
           margin="normal"
-          value={this.state.image}
+          value={image}
           onChange={this.handleChange('image')}
         />
            <TextField
@@ -178,7 +179,7 @@ class Products extends Component {
           label="Color"
           className={classes.textField}
           margin="normal"
-          value={this.state.color}
+          value={color}
           onChange={this.handleChange('color')}
         />
         < Button variant="contained" size="small" color="primary" className={classes.button} onClick={this.handleSubmit}>
