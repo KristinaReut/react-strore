@@ -62,11 +62,12 @@ class Categories extends Component {
     e.preventDefault();
     const { name } = this.state;
     createCategory({ name }).then(this.loadAllCategories);
+  }
   
   render() {
     const { classes } = this.props;
     const { categories, name } = this.state;
-    
+
     return (
       <div>
         <form className={classes.container} noValidate autoComplete="off" onSubmit={this.handleSubmit}>
