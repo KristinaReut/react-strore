@@ -3,7 +3,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import CategoriesDelete from './CategoriesDelete'
 import CategoriesEdit from './CategoriesEdit'
 
@@ -25,7 +24,7 @@ const styles = theme => ({
   class CategoriesTableRow extends Component {
   
     render() {
-      const { classes } = this.props;
+    
       const {category}=this.props;
       const {index}=this.props;
     
@@ -37,7 +36,7 @@ const styles = theme => ({
             {index+1}
           </TableCell>
           <TableCell>
-            {category.name}
+            {category.name} 
           </TableCell>
           <TableCell>
             <CategoriesDelete />
