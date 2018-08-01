@@ -11,12 +11,31 @@ const styles = theme => ({
   });
 
   class CategoriesDelete extends Component {
-  
+    state = {
+        category: "",
+        categories: [],
+      }
+
+    onDelete(id) {
+        deleteCategory(id)
+            .then((data) => {
+                let categories = this.state.categories.filter((category) => {
+                    return id !== category.id;
+                });
+
+                this.setState(state => {
+                    state.categories = categories;
+                    return state;
+                });
+            })
+            
+        }
     render() {
       const { classes } = this.props;
 
         return (  
-          <Button variant="contained" color="secondary" className={classes.button} type="submit" onClick={this.onClickDelete}>
+          <Button variant="contained" color="secondary" className={classes.button} type="submit"  categories={this.state.categories}
+          onDelete={this.onDelete.bind(this)}>
             Delete
           </Button>
          )
