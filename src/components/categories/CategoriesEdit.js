@@ -11,17 +11,27 @@ const styles = theme => ({
   });
 
   class CategoriesEdit extends Component {
-  
+    state = {
+        name: "",
+        category: "",
+      }
+
+      updateCategory = (e) => {
+        this.updateCategory({name: e.target.value});
+       
+        } 
+
     render() {
       const { classes } = this.props;
 
         return (  
-            <Button variant="contained" color="primary" className={classes.button} type="submit">
+            <Button variant="contained" color="primary" className={classes.button} type="submit" onClick={this.updateCategory.bind(this)}>
             Edit
          </Button>
          )
     }
 }
+
 CategoriesEdit.propTypes = {
     classes: PropTypes.object.isRequired,
   };

@@ -162,7 +162,7 @@ class Products extends Component {
             },
           }}
           margin="normal"
-          value={category}
+          value={category.name} 
           onChange={this.handleChange('category')}
         />
         <TextField
