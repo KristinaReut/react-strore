@@ -43,7 +43,7 @@ class ProductsTableRow extends Component {
                 <TableCell numeric>{product.image}</TableCell>
                 <TableCell numeric>{product.color}</TableCell>
                 <TableCell numeric>
-                <Button variant="contained" color="secondary" className={classes.button} type="submit" onClick={this.onClickDelete}>
+                <Button variant="contained" color="secondary" className={classes.button} type="submit" onClick={this.delete}>
                  Delete
                  </Button>
                  <Button variant="contained" color="primary" className={classes.button} type="submit">
