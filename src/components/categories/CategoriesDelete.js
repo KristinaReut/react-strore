@@ -6,46 +6,41 @@ import { deleteCategory } from '../api';
 
 const styles = theme => ({
     button: {
-      margin: theme.spacing.unit,
+        margin: theme.spacing.unit,
     },
-  });
+});
 
-  class CategoriesDelete extends Component {
+class CategoriesDelete extends Component {
     state = {
         category: "",
         categories: [],
-      }
+    }
 
-    onDelete(id) {
-        deleteCategory(id)
-            .then((even) => {
-                let categories = this.state.categories.filter((category) => {
-                    return id !== category.id;
-                });
 
-                this.setState(state => {
-                    state.categories = categories;
-                    return state;
-                });
-            })
-            
-        }
+    deleteCategory = () => {
+        // delete
+        // this.setState({
+        //     category: event.target.value,
+        //   });
+        // const id = this.props.id
+        console.log(this.props.id)
+        deleteCategory(this.props.id)
+    }
     render() {
-      const { classes } = this.props;
-
-        return (  
-          <Button variant="contained" color="secondary" className={classes.button} type="submit"  categories={this.state.categories}
-          onDelete={this.onDelete.bind(this)}>
-            Delete
+        const { classes } = this.props;
+        return (
+            <Button variant="contained" color="secondary" className={classes.button} type="submit" categories={this.state.categories}
+                onClick={this.deleteCategory}>
+                Delete
           </Button>
-         )
+        )
     }
 }
 CategoriesDelete.propTypes = {
     classes: PropTypes.object.isRequired,
-  };
-  
-  export default withStyles(styles)(CategoriesDelete);
+};
 
-          
+export default withStyles(styles)(CategoriesDelete);
+
+
 

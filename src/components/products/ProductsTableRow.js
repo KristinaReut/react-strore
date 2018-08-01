@@ -28,12 +28,10 @@ const styles = theme => ({
 class ProductsTableRow extends Component {
 
   render() {
-    const { classes } = this.props;
     const {product}=this.props;
     const {index}=this.props;
-  
-    
     console.log(product);
+    
       return (  
                 <TableRow>
                 <TableCell component="th" scope="row">{index +1}</TableCell>

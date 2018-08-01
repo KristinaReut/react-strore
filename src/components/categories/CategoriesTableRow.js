@@ -39,7 +39,7 @@ const styles = theme => ({
             {category.name} 
           </TableCell>
           <TableCell>
-            <CategoriesDelete />
+            <CategoriesDelete id = {category.id}/>
             <CategoriesEdit /> 
           </TableCell>
          </TableRow>
