@@ -3,8 +3,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
+import ProductsDelete from './CategoriesDelete'
+import ProductsEdit from './CategoriesEdit'
 
 
 const styles = theme => ({
@@ -43,12 +44,8 @@ class ProductsTableRow extends Component {
                 <TableCell numeric>{product.image}</TableCell>
                 <TableCell numeric>{product.color}</TableCell>
                 <TableCell numeric>
-                <Button variant="contained" color="secondary" className={classes.button} type="submit" onClick={this.delete}>
-                 Delete
-                 </Button>
-                 <Button variant="contained" color="primary" className={classes.button} type="submit">
-                 Edit
-                 </Button>
+                <ProductsDelete />
+                <ProductsEdit />
                 </TableCell>
                 <TableCell numeric> <Checkbox  value="checkedD" /> </TableCell>
               </TableRow>
