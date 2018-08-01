@@ -4,8 +4,8 @@ import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
-import ProductsDelete from './CategoriesDelete'
-import ProductsEdit from './CategoriesEdit'
+import ProductsDelete from './ProductsDelete'
+import ProductsEdit from './ProductsEdit'
 
 
 const styles = theme => ({
