@@ -4,7 +4,9 @@ import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { deleteCategory, updateCategory } from '../api';
+import CategoriesDelete from './CategoriesDelete'
+import CategoriesEdit from './CategoriesEdit'
+
 
 const styles = theme => ({
     textField: {
@@ -25,8 +27,6 @@ const styles = theme => ({
   
   class CategoriesTableRow extends Component {
   
-
-  
     render() {
       const { classes } = this.props;
       const {category}=this.props;
@@ -43,12 +43,8 @@ const styles = theme => ({
             {category.name}
           </TableCell>
           <TableCell>
-          <Button variant="contained" color="secondary" className={classes.button} type="submit" onClick={this.onClickDelete}>
-           Delete
-         </Button>
-          <Button variant="contained" color="primary" className={classes.button} type="submit">
-            Edit
-         </Button>
+            <CategoriesDelete />
+            <CategoriesEdit /> 
           </TableCell>
          </TableRow>
          )
