@@ -32,14 +32,14 @@ class ProductsTableRow extends Component {
     const {index}=this.props;
   
     
-    console.log(category);
+    console.log(product);
       return (  
                 <TableRow>
                 <TableCell component="th" scope="row">{index +1}</TableCell>
                 <TableCell numeric>{product.name}</TableCell>
                 <TableCell numeric>{product.price}</TableCell>
                 <TableCell numeric>{product.description}</TableCell>
-                <TableCell numeric>{category.name}</TableCell>
+                <TableCell numeric>{product.category}</TableCell>
                 <TableCell numeric>{product.image}</TableCell>
                 <TableCell numeric>{product.color}</TableCell>
                 <TableCell numeric>
