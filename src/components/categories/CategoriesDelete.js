@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { deleteCategory } from '../api';
-
+import TableBody from '@material-ui/core/TableBody';
+import CategoriesTableRow from './CategoriesTableRow';
 
 const styles = theme => ({
     button: {
@@ -14,25 +14,24 @@ const styles = theme => ({
 class CategoriesDelete extends Component {
     state = {
         category: "",
-        categories: [],
     }
-
-
     deleteCategory = () => {
+        const { deleteCategory } = this.props
         const id = this.props.id
-        console.log(id)
-        deleteCategory(id)
+        deleteCategory(this.props.id)
     }
-  
+
     render() {
         const { classes } = this.props;
         return (
-          
-            <Button variant="contained" color="secondary" className={classes.button} type="submit" categories={this.state.categories}
-                onClick={this.deleteCategory}>
-                Delete
+            <div>
+                <Button variant="contained" color="secondary" className={classes.button} type="submit"
+                    onClick={this.deleteCategory}
+                >
+                    Delete
           </Button>
-              )
+            </div>
+        )
     }
 }
 CategoriesDelete.propTypes = {

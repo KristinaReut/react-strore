@@ -9,7 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { createCategory, getAllCategories } from '../api';
+import { createCategory, getAllCategories, deleteCategory} from '../api';
 import CategoriesTableRow from './CategoriesTableRow';
 
 
@@ -64,12 +64,14 @@ class Categories extends Component {
     const { name } = this.state;
     createCategory({ name }).then(this.loadAllCategories);
   }
- 
+  deleteCategory = (id) => {
+    deleteCategory(id).then(this.loadAllCategories)
+  }
+
 
   render() {
     const { classes } = this.props;
     const { categories, name } = this.state;
-
     return (
       <div>
         <form className={classes.container} noValidate autoComplete="off" onSubmit={this.handleSubmit} >
@@ -80,7 +82,7 @@ class Categories extends Component {
             value={name}
             onChange={this.handleChange('name')}
           />
-          <Button variant="contained" color="primary" className={classes.button} type="submit">
+          <Button variant="contained" color="primary" className={classes.button} type="submit" >
             Add Category
          </Button>
         </form>
@@ -97,6 +99,7 @@ class Categories extends Component {
               {
                 categories.map((category, index) => (
                   <CategoriesTableRow
+                    deleteCategory={this.deleteCategory}
                     index={index}
                     category={category}
                   />

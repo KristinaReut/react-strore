@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CategoriesDelete from './CategoriesDelete'
 import CategoriesEdit from './CategoriesEdit'
+import TableBody from '@material-ui/core/TableBody';
 
 
 const styles = theme => ({
@@ -14,7 +15,7 @@ const styles = theme => ({
     width: 200,
   },
   root: {
-    width: '40%',
+    width: '60%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },
@@ -23,24 +24,30 @@ const styles = theme => ({
 
 class CategoriesTableRow extends Component {
 
+  deleteCategory = (id) => {
+    const { deleteCategory } = this.props
+    deleteCategory(id)
+  }
+
   render() {
 
     const { category } = this.props;
     const { index } = this.props;
-    return (
-      <TableRow>
-        <TableCell>
-          {index + 1}
-        </TableCell>
-        <TableCell>
-          {category.name}
-        </TableCell>
-        <TableCell>
-          <CategoriesDelete id={category.id} />
-          <CategoriesEdit category={category} />
-        </TableCell>
-      </TableRow>
-    )
+
+      return (
+        <TableRow>
+          <TableCell>
+            {index + 1}
+          </TableCell>
+          <TableCell>
+            {category.name}
+          </TableCell>
+          <TableCell>
+            <CategoriesDelete id={category.id} deleteCategory={this.deleteCategory} />
+            <CategoriesEdit category={category} />
+          </TableCell>
+        </TableRow>
+      )
   }
 }
 CategoriesTableRow.propTypes = {
