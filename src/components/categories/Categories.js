@@ -9,7 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { createCategory, getAllCategories, deleteCategory} from '../api';
+import { createCategory, getAllCategories, deleteCategory, updateCategory} from '../api';
 import CategoriesTableRow from './CategoriesTableRow';
 
 
@@ -43,8 +43,9 @@ class Categories extends Component {
   state = {
     name: "",
     categories: [],
+    
   }
-
+  
   handleChange = (name) => (event) => {
     this.setState({
       [name]: event.target.value,
@@ -62,10 +63,14 @@ class Categories extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { name } = this.state;
+    this.setState ({name: ""});
     createCategory({ name }).then(this.loadAllCategories);
   }
   deleteCategory = (id) => {
     deleteCategory(id).then(this.loadAllCategories)
+  }
+  updateCategory = (id) => {
+    updateCategory(id).then(this.loadAllCategories)
   }
 
 
@@ -100,6 +105,7 @@ class Categories extends Component {
                 categories.map((category, index) => (
                   <CategoriesTableRow
                     deleteCategory={this.deleteCategory}
+                    updateCategory={this.updateCategory}
                     index={index}
                     category={category}
                   />

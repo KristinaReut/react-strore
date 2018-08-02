@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import TableBody from '@material-ui/core/TableBody';
-import CategoriesTableRow from './CategoriesTableRow';
 
 const styles = theme => ({
     button: {
