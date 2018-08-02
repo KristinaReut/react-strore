@@ -28,9 +28,9 @@ class CategoriesTableRow extends Component {
     const { deleteCategory } = this.props
     deleteCategory(id)
   }
-  updateCategory = (id) => {
+  updateCategory = (id, { name: data }) => {
     const { updateCategory} = this.props
-    updateCategory(id)
+    updateCategory(id, { name: data })
   }
 
   render() {
@@ -48,7 +48,7 @@ class CategoriesTableRow extends Component {
           </TableCell>
           <TableCell>
             <CategoriesDelete id={category.id} deleteCategory={this.deleteCategory} />
-            <CategoriesEdit category={category} agree={this.updateCategory}/>
+            <CategoriesEdit category={category} updateCategory={this.updateCategory}/>
           </TableCell>
         </TableRow>
       )

@@ -69,8 +69,8 @@ class Categories extends Component {
   deleteCategory = (id) => {
     deleteCategory(id).then(this.loadAllCategories)
   }
-  updateCategory = (id) => {
-    updateCategory(id).then(this.loadAllCategories)
+  updateCategory = (id, { name: data }) => {
+    updateCategory(id, { name: data }).then(this.loadAllCategories)
   }
 
 
@@ -101,16 +101,17 @@ class Categories extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {
+              {  
                 categories.map((category, index) => (
                   <CategoriesTableRow
                     deleteCategory={this.deleteCategory}
                     updateCategory={this.updateCategory}
                     index={index}
                     category={category}
-                  />
+                /> 
                 ))
               }
+            
             </TableBody>
           </Table>
         </Paper>

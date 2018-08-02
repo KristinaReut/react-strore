@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { updateCategory } from '../api';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -42,7 +41,9 @@ class CategoriesEdit extends Component {
       [name]: event.target.value,
     });
   };
-  agree = () => {
+ 
+  updateCategory = () => {
+    const { updateCategory } = this.props
     const category = this.props.category
     const id = category.id;
     const data = this.state.category;
@@ -79,7 +80,7 @@ class CategoriesEdit extends Component {
             <Button onClick={this.handleClose} color="primary">
               Disagree
            </Button>
-            <Button onClick={this.agree} color="primary" autoFocus>
+            <Button onClick={this.updateCategory} color="primary" autoFocus>
               Agree
            </Button>
           </DialogActions>
