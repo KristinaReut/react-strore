@@ -11,21 +11,22 @@ const styles = theme => ({
   });
 
   class CategoriesEdit extends Component {
-    state = {
-        name: "",
+     state = {
         category: "",
-      }
+        categories: [],
+    }
 
-      updateCategory = (e) => {
-        this.updateCategory({name: e.target.value});
-       
-        } 
 
+    updateCategory = () => {
+        const id = this.props.id
+        console.log(id)
+        updateCategory(id).then
+    }
     render() {
-      const { classes } = this.props;
-
+        const { classes } = this.props;
         return (  
-            <Button variant="contained" color="primary" className={classes.button} type="submit" onClick={this.updateCategory.bind(this)}>
+            <Button variant="contained" color="primary" className={classes.button} type="submit" categories={this.state.categories}
+            onClick={this.updateCategory}>
             Edit
          </Button>
          )
