@@ -21,8 +21,9 @@ class CategoriesDelete extends Component {
     deleteCategory = () => {
         const id = this.props.id
         console.log(id)
-        deleteCategory(id).then(updateCategory)
+        deleteCategory(id)
     }
+   
     render() {
         const { classes } = this.props;
         
@@ -31,7 +32,6 @@ class CategoriesDelete extends Component {
                 onClick={this.deleteCategory}>
                 Delete
           </Button>
-         
         )
     }
 }

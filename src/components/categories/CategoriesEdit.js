@@ -3,41 +3,97 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { updateCategory } from '../api';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
-    button: {
-      margin: theme.spacing.unit,
-    },
-  });
+  button: {
+    margin: theme.spacing.unit,
+  },
+});
 
-  class CategoriesEdit extends Component {
-     state = {
-        category: "",
-        categories: [],
-    }
+class CategoriesEdit extends Component {
+  state = {
+    category: '',
+    categories: [],
+    open: false,
+  }
+  handleClose = () => {
+    this.setState({
+      open: false
+    })
+  }
 
-
-    updateCategory = () => {
-        const id = this.props.id
-        console.log(id)
-        updateCategory(id).then
-    }
-    render() {
-        const { classes } = this.props;
-        return (  
-            <Button variant="contained" color="primary" className={classes.button} type="submit" categories={this.state.categories}
-            onClick={this.updateCategory}>
-            Edit
+  openDialog = () => {
+    this.setState({
+      open: true
+    })
+  }
+  componentDidMount() {
+    this.setState({
+      category: this.props.category.name
+    })
+  }
+  handleChange = (name) => (event) => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+  agree = () => {
+    const category = this.props.category
+    const id = category.id;
+    const data = this.state.category;
+    updateCategory(id, { name: data });
+    this.handleClose()
+  }
+  render() {
+    const { classes, category } = this.props;
+    return (
+      <div>
+        <Button variant="contained" color="primary" className={classes.button} type="submit" categories={this.state.categories}
+          onClick={this.openDialog}>
+          Edit
          </Button>
-         )
-    }
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+         
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Edit
+           </DialogContentText>
+            <TextField
+              label="Categories"
+              margin="normal"
+              value={this.state.category}
+              onChange={this.handleChange('category')}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Disagree
+           </Button>
+            <Button onClick={this.agree} color="primary" autoFocus>
+              Agree
+           </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    )
+  }
 }
 
 CategoriesEdit.propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
-  
-  export default withStyles(styles)(CategoriesEdit);
+  classes: PropTypes.object.isRequired,
+};
 
-          
-          
+export default withStyles(styles)(CategoriesEdit);
+
+

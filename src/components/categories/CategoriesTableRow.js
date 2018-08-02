@@ -8,46 +8,43 @@ import CategoriesEdit from './CategoriesEdit'
 
 
 const styles = theme => ({
-    textField: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
-      width: 200,
-    },
-    root: {
-      width: '40%',
-      marginTop: theme.spacing.unit * 3,
-      overflowX: 'auto',
-    },
-  });
-  
-  
-  class CategoriesTableRow extends Component {
-  
-    render() {
-    
-      const {category}=this.props;
-      const {index}=this.props;
-    
-      
-      console.log(category);
-        return (  
-          <TableRow>
-          <TableCell>
-            {index+1}
-          </TableCell>
-          <TableCell>
-            {category.name} 
-          </TableCell>
-          <TableCell>
-            <CategoriesDelete id = {category.id}/>
-            <CategoriesEdit id = {category.id}/> 
-          </TableCell>
-         </TableRow>
-         )
-    }
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  },
+  root: {
+    width: '40%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+  },
+});
+
+
+class CategoriesTableRow extends Component {
+
+  render() {
+
+    const { category } = this.props;
+    const { index } = this.props;
+    return (
+      <TableRow>
+        <TableCell>
+          {index + 1}
+        </TableCell>
+        <TableCell>
+          {category.name}
+        </TableCell>
+        <TableCell>
+          <CategoriesDelete id={category.id} />
+          <CategoriesEdit category={category} />
+        </TableCell>
+      </TableRow>
+    )
+  }
 }
 CategoriesTableRow.propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
-  
-  export default withStyles(styles)(CategoriesTableRow);
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(CategoriesTableRow);
