@@ -10,7 +10,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { createCategory, getAllCategories } from '../api';
-import CategoriesTableRow from './CategoriesTableRow'
+import CategoriesTableRow from './CategoriesTableRow';
+
 
 const styles = theme => ({
   container: {
@@ -29,7 +30,7 @@ const styles = theme => ({
     display: 'none',
   },
   root: {
-    width: '50%',
+    width: '60%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },

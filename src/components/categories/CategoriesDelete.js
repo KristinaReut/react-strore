@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { deleteCategory, updateCategory } from '../api';
+import { deleteCategory } from '../api';
 
 
 const styles = theme => ({
@@ -23,7 +23,11 @@ class CategoriesDelete extends Component {
         console.log(id)
         deleteCategory(id)
     }
-   
+    componentDidMount() {
+        this.setState({
+          category: this.props.category
+        })
+      }
     render() {
         const { classes } = this.props;
         
@@ -32,6 +36,7 @@ class CategoriesDelete extends Component {
                 onClick={this.deleteCategory}>
                 Delete
           </Button>
+        
         )
     }
 }
