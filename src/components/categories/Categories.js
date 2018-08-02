@@ -9,7 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { createCategory, getAllCategories, deleteCategory, updateCategory} from '../api';
+import { createCategory, getAllCategories, deleteCategory, updateCategory } from '../api';
 import CategoriesTableRow from './CategoriesTableRow';
 
 
@@ -42,10 +42,9 @@ const styles = theme => ({
 class Categories extends Component {
   state = {
     name: "",
-    categories: [],
-    
+    categories: []
   }
-  
+
   handleChange = (name) => (event) => {
     this.setState({
       [name]: event.target.value,
@@ -62,9 +61,11 @@ class Categories extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    const { name } = this.state;
-    this.setState ({name: ""});
-    createCategory({ name }).then(this.loadAllCategories);
+    if (this.state.name.trim().length > 0) {
+      const { name } = this.state;
+      this.setState({ name: "" });
+      createCategory({ name }).then(this.loadAllCategories);
+    }
   }
   deleteCategory = (id) => {
     deleteCategory(id).then(this.loadAllCategories)
@@ -87,7 +88,7 @@ class Categories extends Component {
             value={name}
             onChange={this.handleChange('name')}
           />
-          <Button variant="contained" color="primary" className={classes.button} type="submit" >
+          <Button disabled={this.state.disabled} variant="contained" color="primary" className={classes.button} type="submit" >
             Add Category
          </Button>
         </form>
@@ -101,17 +102,21 @@ class Categories extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {  
-                categories.map((category, index) => (
-                  <CategoriesTableRow
-                    deleteCategory={this.deleteCategory}
-                    updateCategory={this.updateCategory}
-                    index={index}
-                    category={category}
-                /> 
-                ))
+              {
+                categories.map((category, index) => {
+                  if (category.name.trim().length > 0) {
+                    return (
+                      <CategoriesTableRow
+                        deleteCategory={this.deleteCategory}
+                        updateCategory={this.updateCategory}
+                        index={index}
+                        category={category}
+                      />)
+                  }
+                  else { return (null) }
+                })
               }
-            
+
             </TableBody>
           </Table>
         </Paper>
