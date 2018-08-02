@@ -23,21 +23,16 @@ class CategoriesDelete extends Component {
         console.log(id)
         deleteCategory(id)
     }
-    componentDidMount() {
-        this.setState({
-          category: this.props.category
-        })
-      }
+  
     render() {
         const { classes } = this.props;
-        
         return (
+          
             <Button variant="contained" color="secondary" className={classes.button} type="submit" categories={this.state.categories}
                 onClick={this.deleteCategory}>
                 Delete
           </Button>
-        
-        )
+              )
     }
 }
 CategoriesDelete.propTypes = {

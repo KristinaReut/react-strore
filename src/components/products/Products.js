@@ -11,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { createProduct , getAllProducts } from '../api';
 import ProductsTableRow from  './ProductsTableRow' 
+import {  getAllCategories } from '../api';
 
 const styles = theme => ({
   container: {
@@ -45,7 +46,7 @@ const styles = theme => ({
 class Products extends Component {
   state = {
     products: [],
-    name: '',
+    product: '',
     price: '',
     color: '',
     description: '',
@@ -53,9 +54,39 @@ class Products extends Component {
     image: '',
 
   }
-  handleChange = (name) => (event) => {
+  handleChange = (product) => (event) => {
     this.setState({
-      [name]: event.target.value,
+      [product]: event.target.value,
+
+    });
+  };
+  handleChange = (price) => (event) => {
+    this.setState({
+      [price]: event.target.value,
+
+    });
+  };
+  handleChange = (color) => (event) => {
+    this.setState({
+      [color]: event.target.value,
+
+    });
+  };
+  handleChange = (description) => (event) => {
+    this.setState({
+      [description]: event.target.value,
+
+    });
+  };
+  handleChange = (image) => (event) => {
+    this.setState({
+      [image]: event.target.value,
+
+    });
+  };
+  handleChange = (product) => (event) => {
+    this.setState({
+      [product]: event.target.value,
 
     });
   };
@@ -64,19 +95,28 @@ class Products extends Component {
       this.setState({ products });
     });
   };
+  loadAllCategories = () => {
+    getAllCategories().then(categories => {
+      this.setState({ categories });
+    });
+  };
+
+  componentDidMount() {
+    this.loadAllCategories();
+  }
 
   componentDidMount() {
     this.loadAllProducts();
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    const { name } = this.state;
-    createProduct({ name }).then(this.loadAllProducts);
+    const {  product, price, color, description, image } = this.state;
+    createProduct({product, price, color, description, image}).then(this.loadAllProducts);
   }
 
   render() {
     const {classes} = this.props;
-    const { products, name, price, color, description, category, image } = this.state;
+    const { category, products, product, price, color, description, image } = this.state;
     return (
       <div>
         <form className={classes.container} noValidate autoComplete="off" >
@@ -132,8 +172,8 @@ class Products extends Component {
           label="Name"
           className={classes.textField}
           margin="normal"
-          value={name}
-          onChange={this.handleChange('name')}
+          value={product}
+          onChange={this.handleChange('product')}
         />
    <TextField
           required
@@ -162,8 +202,8 @@ class Products extends Component {
             },
           }}
           margin="normal"
-          value={category.name} 
-          onChange={this.handleChange('category')}
+          option={category}
+          onChange={this.handleChange('')}
         />
         <TextField
           required

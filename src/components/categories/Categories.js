@@ -64,6 +64,7 @@ class Categories extends Component {
     const { name } = this.state;
     createCategory({ name }).then(this.loadAllCategories);
   }
+ 
 
   render() {
     const { classes } = this.props;
@@ -79,7 +80,7 @@ class Categories extends Component {
             value={name}
             onChange={this.handleChange('name')}
           />
-          <Button variant="contained" color="primary" className={classes.button} type="submit" >
+          <Button variant="contained" color="primary" className={classes.button} type="submit">
             Add Category
          </Button>
         </form>
