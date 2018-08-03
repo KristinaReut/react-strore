@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import CategoriesDelete from './CategoriesDelete'
 import CategoriesEdit from './CategoriesEdit'
-import TableBody from '@material-ui/core/TableBody';
 
 
 const styles = theme => ({

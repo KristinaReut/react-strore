@@ -8,6 +8,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import { createProduct , getAllProducts,  deleteProduct, updateProduct } from '../api';
 import ProductsTableRow from  './ProductsTableRow' 
@@ -52,15 +53,19 @@ class Products extends Component {
     description: '',
     category: '',
     image: '',
-
+    categories: [],
+    
   }
-  handleChange = (productName, price, color, description, image) => (event) => {
+  
+  handleChange = (productName, price, color, description, image, category) => (event) => {
     this.setState({
       [productName]: event.target.value,
       [price]: event.target.value,
       [color]: event.target.value,
       [description]: event.target.value,
       [image]: event.target.value,
+      [category]: event.target.value,
+      
     });
   };
   
@@ -70,36 +75,19 @@ class Products extends Component {
       this.setState({ products });
     });
   };
-  /*loadAllCategories = () => {
+  loadAllCategories = () => {
     getAllCategories().then(categories => {
       this.setState({ categories });
        this.loadAllCategories();
     });
-    <TextField
-        required
-          select
-          label="Select category"
-          className={classes.textField}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          margin="normal"
-          option={category}
-          onChange={this.handleChange('')}
-        />
-  }; */
+  
+  }; 
 
   componentDidMount() {
     this.loadAllProducts();
   }
+  
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-   
-    
-  }
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.productName.trim().length > 0 && this.state.price.trim().length > 0 && this.state.color.trim().length > 0 && this.state.image.trim().length > 0) {
@@ -116,13 +104,13 @@ class Products extends Component {
   deleteProduct = (id) => {
     deleteProduct(id).then(this.loadAllProducts)
   }
-  updateProduct = (id, { name: data }) => {
-    updateProduct(id, { name: data }).then(this.loadAllProducts)
+  updateProduct = (id, { productName: data }) => {
+    updateProduct(id, { productName: data }).then(this.loadAllProducts)
   }
 
   render() {
     const {classes} = this.props;
-    const { products, productName, price, color, description, image } = this.state;
+    const { products, productName, price, color, description, image, categories} = this.state;
     return (
       <div>
         <form className={classes.container} noValidate autoComplete="off" >
@@ -199,7 +187,26 @@ class Products extends Component {
           value={description}
           onChange={this.handleChange('description')}
         />
-        
+         <TextField
+         required
+          select
+          label="Select category"
+          className={classes.textField}
+          value={this.state.category}
+          onChange={this.handleChange('category')}
+          SelectProps={{
+            MenuProps: {
+              className: classes.menu,
+            },
+          }}
+          margin="normal"
+        >
+          {categories.map(option => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
         <TextField
           required
           label="IMG URL"

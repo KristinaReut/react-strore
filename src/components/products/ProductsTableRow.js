@@ -28,9 +28,9 @@ class ProductsTableRow extends Component {
     const { deleteProduct } = this.props
     deleteProduct(id)
   }
-  updateProduct = (id, { name: data }) => {
+  updateProduct = (id, { productName: data }) => {
     const { updateProduct} = this.props
-    updateProduct(id, { name: data })
+    updateProduct(id, { productName: data })
   }
   render() {
     const {product}=this.props;
