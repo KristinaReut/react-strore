@@ -13,6 +13,8 @@ import Paper from '@material-ui/core/Paper';
 import { createProduct , getAllProducts,  deleteProduct, updateProduct } from '../api';
 import ProductsTableRow from  './ProductsTableRow' 
 import {  getAllCategories } from '../api';
+import ProductsSearch  from './ProductsSearch' ;
+import ProductsCategoryFilter from  './ProductsCategoryFilter' 
 
 const styles = theme => ({
   container: {
@@ -114,8 +116,8 @@ class Products extends Component {
     return (
       <div>
         <form className={classes.container} noValidate autoComplete="off" >
-        <ProductSearch />
-        <ProductCategoryFilter /> 
+        <ProductsSearch />
+        <ProductsCategoryFilter /> 
         </form>
         <Paper className={classes.root}>
       <Table className={classes.table}>

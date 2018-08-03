@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import PropTypes from 'prop-types';
 
+const styles = theme => ({
 
-
-
-class Products extends Component {
+    textField: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+      width: 150,
+    },
+  
+  });
+class ProductsSearch extends Component {
     state = {
     }
     
 render() {
     const {classes} = this.props;
-    const { products, productName, price, color, description, image, categories} = this.state;
+    
     return (
         <form className={classes.container} noValidate autoComplete="off" >
         <TextField

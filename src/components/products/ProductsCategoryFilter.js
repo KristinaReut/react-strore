@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import PropTypes from 'prop-types';
 
+const styles = theme => ({
 
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 150,
+  },
 
-
+});
 class ProductsCategoryFilter extends Component {
     state = {
     }
 
     render() {
-       ( <form>
+      const {classes} = this.props;
+       return ( <form>
            <TextField
           select
           label="Category-filter"
@@ -25,7 +35,7 @@ class ProductsCategoryFilter extends Component {
         }
         }
         
-Products.propTypes = {
+ProductsCategoryFilter.propTypes = {
     classes: PropTypes.object.isRequired,
           };
           
