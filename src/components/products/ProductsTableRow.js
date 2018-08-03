@@ -28,37 +28,37 @@ class ProductsTableRow extends Component {
     const { deleteProduct } = this.props
     deleteProduct(id)
   }
-  updateProduct = (id, { productName: data }) => {
-    const { updateProduct} = this.props
-    updateProduct(id, { productName: data })
+  updateProduct = (id, data) => {
+    const { updateProduct } = this.props
+    updateProduct(id, data)
   }
   render() {
-    const {product}=this.props;
-    const {index}=this.props;
-    console.log(product);
-    
-      return (  
-                <TableRow>
-                <TableCell component="th" scope="row">{index +1}</TableCell>
-                <TableCell numeric>{product.productName}</TableCell>
-                <TableCell numeric>{product.price}</TableCell>
-                <TableCell numeric>{product.description}</TableCell>
-                <TableCell numeric>{product.category}</TableCell>
-                <TableCell numeric>{product.image}</TableCell>
-                <TableCell numeric>{product.color}</TableCell>
-                <TableCell numeric>
-                <ProductsDelete id={product.id} deleteProduct={this.deleteProduct}/>
-                <ProductsEdit product={product} updateProduct={this.updateProduct}/>
-                </TableCell>
-                <TableCell numeric> <Checkbox  value="checkedD" /> </TableCell>
-              </TableRow>
+    const { product } = this.props;
+    const { index } = this.props;
+    // console.log(product);
 
-              )
-             }
+    return (
+      <TableRow>
+        <TableCell component="th" scope="row">{index + 1}</TableCell>
+        <TableCell numeric>{product.productName}</TableCell>
+        <TableCell numeric>{product.price}</TableCell>
+        <TableCell numeric>{product.description}</TableCell>
+        <TableCell numeric>{product.category}</TableCell>
+        <TableCell numeric>{product.image}</TableCell>
+        <TableCell numeric>{product.color}</TableCell>
+        <TableCell numeric>
+          <ProductsDelete id={product.id} deleteProduct={this.deleteProduct} />
+          <ProductsEdit product={product} updateProduct={this.updateProduct} loadAllProducts={this.loadAllProducts} />
+        </TableCell>
+        <TableCell numeric> <Checkbox value="checkedD" /> </TableCell>
+      </TableRow>
+
+    )
+  }
 }
 
- ProductsTableRow.propTypes = {
-     classes: PropTypes.object.isRequired,
-    };
-              
+ProductsTableRow.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
 export default withStyles(styles)(ProductsTableRow);
