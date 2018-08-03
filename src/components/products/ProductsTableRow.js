@@ -35,7 +35,7 @@ class ProductsTableRow extends Component {
       return (  
                 <TableRow>
                 <TableCell component="th" scope="row">{index +1}</TableCell>
-                <TableCell numeric>{product.product}</TableCell>
+                <TableCell numeric>{product.productName}</TableCell>
                 <TableCell numeric>{product.price}</TableCell>
                 <TableCell numeric>{product.description}</TableCell>
                 <TableCell numeric>{product.category}</TableCell>

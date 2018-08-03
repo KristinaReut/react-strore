@@ -1,12 +1,12 @@
 {
 	"type": "Collection",
 	"properties": {
-		"name": {
-			"name": "name",
+		"productName": {
+			"name": "productName",
 			"type": "string",
 			"typeLabel": "string",
 			"required": false,
-			"id": "name",
+			"id": "productName",
 			"order": 0
 		},
 		"price": {

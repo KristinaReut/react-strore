@@ -46,7 +46,7 @@ const styles = theme => ({
 class Products extends Component {
   state = {
     products: [],
-    product: '',
+    productName: '',
     price: '',
     color: '',
     description: '',
@@ -54,69 +54,69 @@ class Products extends Component {
     image: '',
 
   }
-  handleChange = (product) => (event) => {
+  handleChange = (productName, price, color, description, image) => (event) => {
     this.setState({
-      [product]: event.target.value,
-
-    });
-  };
-  handleChange = (price) => (event) => {
-    this.setState({
+      [productName]: event.target.value,
       [price]: event.target.value,
-
-    });
-  };
-  handleChange = (color) => (event) => {
-    this.setState({
       [color]: event.target.value,
-
-    });
-  };
-  handleChange = (description) => (event) => {
-    this.setState({
       [description]: event.target.value,
-
-    });
-  };
-  handleChange = (image) => (event) => {
-    this.setState({
       [image]: event.target.value,
-
     });
   };
-  handleChange = (product) => (event) => {
-    this.setState({
-      [product]: event.target.value,
+  
 
-    });
-  };
   loadAllProducts = () => {
     getAllProducts().then(products => {
       this.setState({ products });
     });
   };
-  loadAllCategories = () => {
+  /*loadAllCategories = () => {
     getAllCategories().then(categories => {
       this.setState({ categories });
+       this.loadAllCategories();
     });
-  };
-
-  componentDidMount() {
-    this.loadAllCategories();
-  }
+    <TextField
+        required
+          select
+          label="Select category"
+          className={classes.textField}
+          SelectProps={{
+            MenuProps: {
+              className: classes.menu,
+            },
+          }}
+          margin="normal"
+          option={category}
+          onChange={this.handleChange('')}
+        />
+  }; */
 
   componentDidMount() {
     this.loadAllProducts();
   }
+
   handleSubmit = (e) => {
     e.preventDefault();
-    const {  product, price, color, description, image } = this.state;
-    createProduct({product, price, color, description, image}).then(this.loadAllProducts);
+   
+    
+  }
+  handleSubmit = (e) => {
+    e.preventDefault();
+    if (this.state.productName.trim().length > 0 && this.state.price.trim().length > 0 && this.state.color.trim().length > 0 && this.state.image.trim().length > 0) {
+      const {  productName, price, color, description, image } = this.state;
+      this.setState({  productName: '',
+      price: '',
+      color: '',
+      description: '',
+      category: '',
+      image: '',});
+      createProduct({productName, price, color, description, image}).then(this.loadAllProducts);
+    }
   }
 
   render() {
     const {classes} = this.props;
-    const { category, products, product, price, color, description, image } = this.state;
+    const { products, productName, price, color, description, image } = this.state;
     return (
       <div>
         <form className={classes.container} noValidate autoComplete="off" >
@@ -172,8 +172,8 @@ class Products extends Component {
           label="Name"
           className={classes.textField}
           margin="normal"
-          value={product}
-          onChange={this.handleChange('product')}
+          value={productName}
+          onChange={this.handleChange('productName')}
         />
    <TextField
           required
@@ -191,20 +191,7 @@ class Products extends Component {
           value={description}
           onChange={this.handleChange('description')}
         />
-        <TextField
-        required
-          select
-          label="Select category"
-          className={classes.textField}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          margin="normal"
-          option={category}
-          onChange={this.handleChange('')}
-        />
+        
         <TextField
           required
           label="IMG URL"
@@ -222,7 +209,7 @@ class Products extends Component {
           value={color}
           onChange={this.handleChange('color')}
         />
-        < Button variant="contained" size="small" color="primary" className={classes.button} onClick={this.handleSubmit}>
+        < Button variant="contained" size="small" color="primary" className={classes.button} onClick={this.handleSubmit} disabled={this.state.disabled}>
         Add Product
       </Button>
         </form>
