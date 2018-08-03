@@ -78,13 +78,13 @@ class Products extends Component {
   loadAllCategories = () => {
     getAllCategories().then(categories => {
       this.setState({ categories });
-       this.loadAllCategories();
     });
   
   }; 
 
   componentDidMount() {
     this.loadAllProducts();
+    this.loadAllCategories();
   }
   
 
@@ -114,24 +114,8 @@ class Products extends Component {
     return (
       <div>
         <form className={classes.container} noValidate autoComplete="off" >
-        <TextField
-          label="Search field"
-          type="search"
-          className={classes.textField}
-          margin="normal"
-        />
-        <TextField
-          select
-          label="Category-filter"
-          className={classes.textField}
-          SelectProps={{
-            MenuProps: {
-              className: classes.menu,
-            },
-          }}
-          helperText="Please select category"
-          margin="normal"
-        />
+        <ProductSearch />
+        <ProductCategoryFilter /> 
         </form>
         <Paper className={classes.root}>
       <Table className={classes.table}>
@@ -192,8 +176,8 @@ class Products extends Component {
           select
           label="Select category"
           className={classes.textField}
-          value={this.state.category}
-          onChange={this.handleChange('category')}
+          value={this.state.categories}
+          onChange={this.handleChange('categories')}
           SelectProps={{
             MenuProps: {
               className: classes.menu,
