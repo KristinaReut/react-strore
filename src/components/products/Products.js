@@ -9,7 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { createProduct , getAllProducts } from '../api';
+import { createProduct , getAllProducts,  deleteProduct, updateProduct } from '../api';
 import ProductsTableRow from  './ProductsTableRow' 
 import {  getAllCategories } from '../api';
 
@@ -113,6 +113,12 @@ class Products extends Component {
       createProduct({productName, price, color, description, image}).then(this.loadAllProducts);
     }
   }
+  deleteProduct = (id) => {
+    deleteProduct(id).then(this.loadAllProducts)
+  }
+  updateProduct = (id, { name: data }) => {
+    updateProduct(id, { name: data }).then(this.loadAllProducts)
+  }
 
   render() {
     const {classes} = this.props;
@@ -160,6 +166,8 @@ class Products extends Component {
                   <ProductsTableRow
                     index={index}
                     product={product}
+                    deleteProduct={this.deleteProduct}
+                    updateProduct={this.updateProduct}
                   />
                 ))
               }

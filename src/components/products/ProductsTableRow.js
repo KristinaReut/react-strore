@@ -19,14 +19,19 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },
-  button: {
-    margin: theme.spacing.unit,
-  },
 });
 
 
 class ProductsTableRow extends Component {
 
+  deleteProduct = (id) => {
+    const { deleteProduct } = this.props
+    deleteProduct(id)
+  }
+  updateProduct = (id, { name: data }) => {
+    const { updateProduct} = this.props
+    updateProduct(id, { name: data })
+  }
   render() {
     const {product}=this.props;
     const {index}=this.props;
@@ -42,8 +47,8 @@ class ProductsTableRow extends Component {
                 <TableCell numeric>{product.image}</TableCell>
                 <TableCell numeric>{product.color}</TableCell>
                 <TableCell numeric>
-                <ProductsDelete />
-                <ProductsEdit />
+                <ProductsDelete id={product.id} deleteProduct={this.deleteProduct}/>
+                <ProductsEdit product={product} updateProduct={this.updateProduct}/>
                 </TableCell>
                 <TableCell numeric> <Checkbox  value="checkedD" /> </TableCell>
               </TableRow>
