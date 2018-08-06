@@ -23,7 +23,9 @@ const styles = theme => ({
 
 
 class ProductsTableRow extends Component {
-
+  state = {
+  product: "",
+  }
   deleteProduct = (id) => {
     const { deleteProduct } = this.props
     deleteProduct(id)
@@ -36,7 +38,7 @@ class ProductsTableRow extends Component {
   render() {
     const { product } = this.props;
     const { index } = this.props;
-    // console.log(product);
+
 
     return (
       <TableRow>

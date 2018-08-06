@@ -13,8 +13,6 @@ import Paper from '@material-ui/core/Paper';
 import { createProduct, getAllProducts, deleteProduct, updatedProduct } from '../api';
 import ProductsTableRow from './ProductsTableRow'
 import { getAllCategories } from '../api';
-import ProductsSearch from './ProductsSearch';
-import ProductsCategory from './ProductsCategory';
 
 const styles = theme => ({
   container: {
@@ -55,33 +53,59 @@ class Products extends Component {
     description: '',
     category: '',
     image: '',
-    categories: []
+    filteredProducts: [],
+    categories: [],
+    filter: {
+      query: '',
+    },
+    
   }
-
-  handleChange = name => (event) => {
+  handleFilterChange = name => event => {
+    const { filter, products } = this.state;
+    filter[name] = event.target.value;
+    const filteredProducts = this.filterProducts(products, filter);
     this.setState({
-      [name]: event.target.value
+      filter,
+      filteredProducts
     });
   };
 
-
-  loadAllProducts = () => {
+  filterProducts = (products, filter) =>
+    products
+      .filter(
+        product =>
+          filter.query.length > 2
+            ? product.productName.toLowerCase().includes(filter.query.toLowerCase()) || product.color.toLowerCase().includes(filter.query.toLowerCase()) || product.description.toLowerCase().includes(filter.query.toLowerCase()) || product.image.toLowerCase().includes(filter.query.toLowerCase()) || product.category.toLowerCase().includes(filter.query.toLowerCase())
+            : true
+      );
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+  loadProducts = () => {
     getAllProducts().then(products => {
-      this.setState({ products });
+      const { filter } = this.state;
+      const filteredProducts = this.filterProducts(products, filter);
+      this.setState({ products, filteredProducts });
     });
   };
-  loadAllCategories = () => {
-    getAllCategories().then(categories => {
-      this.setState({ categories });
-    });
 
+  onUpdate = (id, data) => {
+    updatedProduct(id, data).then(this.loadProducts);
   };
 
-  componentDidMount() {
-    this.loadAllProducts();
-    this.loadAllCategories();
+  componentWillMount() {
+    Promise.all([getAllCategories(), getAllProducts()]).then(([categories, products]) => {
+      const { filter } = this.state;
+      const filteredProducts = this.filterProducts(products, filter);
+      this.setState({
+        categories,
+        products,
+        filteredProducts
+      });
+    });
   }
-
 
 
   handleSubmit = (e) => {
@@ -96,11 +120,11 @@ class Products extends Component {
         category: '',
         image: '',
       });
-      createProduct({ productName, price, color, description, category, image }).then(this.loadAllProducts);
+      createProduct({ productName, price, color, description, category, image }).then(this.loadProducts);
     }
   }
   deleteProduct = (id) => {
-    deleteProduct(id).then(this.loadAllProducts)
+    deleteProduct(id).then(this.loadProducts)
   }
   updateProduct = (id, updateProduct) => {
     updatedProduct(id, {
@@ -110,21 +134,23 @@ class Products extends Component {
       description: updateProduct.description,
       category: updateProduct.category,
       image: updateProduct.image
-    }).then(this.loadAllProducts)
+    }).then(this.loadProducts)
   }
-  
+
 
   render() {
     const { classes } = this.props;
-    const { categories, products, productName, price, color, description, image, category } = this.state;
-    console.log(categories)
+    const { categories, products, productName, price, color, description, image, category, filteredProducts } = this.state;
     return (
       <div>
-        <form className={classes.container} noValidate autoComplete="off" >
-          <ProductsSearch />
-          <ProductsCategory category={category} categories={categories} products={products}/>
-        </form>
-
+        <TextField
+          label="Search field"
+          type="search"
+          className={classes.textField}
+          margin="normal"
+          onChange={this.handleFilterChange('query')}
+        />
+       
         <Paper className={classes.root}>
           <Table className={classes.table}>
             <TableHead>
@@ -142,7 +168,7 @@ class Products extends Component {
             </TableHead>
             <TableBody>
               {
-                products.map((product, index) => (
+                filteredProducts.map((product, index) => (
                   <ProductsTableRow
                     index={index}
                     product={product}
