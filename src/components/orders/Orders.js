@@ -7,6 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import OrdersTableRow from './OrdersTableRow';
 
 const styles = theme => ({
   root: {
@@ -37,14 +38,7 @@ class Orders extends Component {
           </TableRow>
         </TableHead>
         <TableBody>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                </TableCell>
-                <TableCell numeric></TableCell>
-                <TableCell numeric></TableCell>
-                <TableCell numeric></TableCell>
-                <TableCell numeric></TableCell>
-              </TableRow>
+             <OrdersTableRow />
         </TableBody>
       </Table>
     </Paper>

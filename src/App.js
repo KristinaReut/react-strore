@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import StarIcon from '@material-ui/icons/Star';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Products from './components/products/Products';
-import Orders from './components/Orders';
+import Orders from './components/orders/Orders';
 import Customers from './components/Customers';
 import Categories from './components/categories/Categories';
 

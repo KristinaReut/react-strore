@@ -14,7 +14,7 @@ import { createProduct, getAllProducts, deleteProduct, updatedProduct } from '..
 import ProductsTableRow from './ProductsTableRow'
 import { getAllCategories } from '../api';
 import ProductsSearch from './ProductsSearch';
-import ProductsCategoryFilter from './ProductsCategoryFilter'
+import ProductsCategory from './ProductsCategory';
 
 const styles = theme => ({
   container: {
@@ -112,6 +112,7 @@ class Products extends Component {
       image: updateProduct.image
     }).then(this.loadAllProducts)
   }
+  
 
   render() {
     const { classes } = this.props;
@@ -121,8 +122,9 @@ class Products extends Component {
       <div>
         <form className={classes.container} noValidate autoComplete="off" >
           <ProductsSearch />
-          <ProductsCategoryFilter />
+          <ProductsCategory category={category} categories={categories} products={products}/>
         </form>
+
         <Paper className={classes.root}>
           <Table className={classes.table}>
             <TableHead>

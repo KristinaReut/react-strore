@@ -32,6 +32,7 @@ class ProductsTableRow extends Component {
     const { updateProduct } = this.props
     updateProduct(id, data)
   }
+ 
   render() {
     const { product } = this.props;
     const { index } = this.props;
