@@ -44,3 +44,4 @@ const deleteRequest = url => {
 export const getAllCategories = () => getRequest('/categories');
 export const getAllProducts = () => getRequest('/products');
 export const getAllOrders = () => getRequest('/orders');
+export const updatedProduct = (id, data) => putRequest(`/products/${id}`, data);

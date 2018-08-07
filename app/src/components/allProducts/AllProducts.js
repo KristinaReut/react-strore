@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { getAllProducts, getAllCategories } from '../api';
+import { getAllProducts, getAllCategories, updatedProduct } from '../api';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Table from '@material-ui/core/Table';
@@ -50,7 +50,8 @@ const styles = theme => ({
   class AllProducts extends Component {
     state = {
         products: [],
-        categories: []
+        categories: [],
+        product: "",
       }
 loadAllCategories = () => {
         getAllCategories().then(categories => {
@@ -64,11 +65,17 @@ loadAllProducts = () => {
       };
 componentWillMount() {
     this.loadAllCategories();
-    this.loadAllProducts()  
+    this.loadAllProducts();
       }
-handleSubmit = (e) => {
-        e.preventDefault();
+addProduct = () => {
+        const {products} = this.state;
+        const {product} = this.props.product;
+        console.log(product)
       }
+
+onUpdate = (id, data) => {
+        updatedProduct(id, data).then(this.loadAllProducts);
+      };
 
 
     render() {
@@ -102,7 +109,7 @@ handleSubmit = (e) => {
                 <CustomTableCell numeric>{product.color}</CustomTableCell>
                 <CustomTableCell numeric>
                 <Button variant="fab" color="primary" aria-label="Add" className={classes.button}
-                onClick={this.handleSubmit}>
+                onClick={this.addProduct}>
                           <AddIcon />
                  </Button>
                 </CustomTableCell>
