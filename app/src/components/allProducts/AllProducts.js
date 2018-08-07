@@ -2,75 +2,116 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { getAllProducts, getAllCategories } from '../api';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import Icon from '@material-ui/core/Icon';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
+const CustomTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 
 const styles = theme => ({
-button: {
-        margin: theme.spacing.unit,
-      },
-      extendedIcon: {
-        marginRight: theme.spacing.unit,
-      },
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
   },
-  gridList: {
-    width: 500,
-    height: 450,
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    transform: 'translateZ(0)',
+  table: {
+    minWidth: 700,
   },
-  titleBar: {
-    background:
-      'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-      'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+  row: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.background.default,
+    },
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+  extendedIcon: {
+    marginRight: theme.spacing.unit,
   },
   icon: {
     color: 'white',
   },
 });
+
+
   class AllProducts extends Component {
     state = {
         products: [],
         categories: []
       }
-      componentWillMount() {
-        Promise.all([getAllCategories(), getAllProducts()])
+loadAllCategories = () => {
+        getAllCategories().then(categories => {
+          this.setState({ categories });
+        });
+      };
+loadAllProducts = () => {
+        getAllProducts().then(products => {
+          this.setState({ products });
+        });
+      };
+componentWillMount() {
+    this.loadAllCategories();
+    this.loadAllProducts()  
       }
-     
+handleSubmit = (e) => {
+        e.preventDefault();
+      }
 
 
     render() {
-    const { classes, products, product } = this.props;
-        
-    console.log(products)
+    const { classes } = this.props;   
+    const { products } = this.state
       return (
-        <div>
-            <GridList cellHeight={200} spacing={1} className={classes.gridList}>
-        {products.map(product => (
-          <GridListTile>
-          {product.productName} Category={product.category}
-            <GridListTileBar>
-                Price={product.price}
-                Description={product.description}
-                Image={product.image}
-            </GridListTileBar>
-            <Button variant="fab" color="primary" aria-label="Add" className={classes.button}>
-        <AddIcon />
-      </Button>
-          </GridListTile>
-        ))}
-      </GridList>
-      </div>
+        <Paper className={classes.root}>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <CustomTableCell>Name</CustomTableCell>
+            <CustomTableCell numeric>Price</CustomTableCell>
+            <CustomTableCell numeric>Category</CustomTableCell>
+            <CustomTableCell numeric>Description</CustomTableCell>
+            <CustomTableCell numeric>Image</CustomTableCell>
+            <CustomTableCell numeric>Color</CustomTableCell>
+            <CustomTableCell numeric>Add to cart</CustomTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {products.map(product => {
+            return (
+              <TableRow className={classes.row}>
+                <CustomTableCell component="th" scope="row">
+                  {product.productName}
+                </CustomTableCell>
+                <CustomTableCell numeric>{product.price}$</CustomTableCell>
+                <CustomTableCell numeric>{product.category}</CustomTableCell>
+                <CustomTableCell numeric>{product.description}</CustomTableCell>
+                <CustomTableCell numeric>{product.image}</CustomTableCell>
+                <CustomTableCell numeric>{product.color}</CustomTableCell>
+                <CustomTableCell numeric>
+                <Button variant="fab" color="primary" aria-label="Add" className={classes.button}
+                onClick={this.handleSubmit}>
+                          <AddIcon />
+                 </Button>
+                </CustomTableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </Paper>
       );
     }
   }
