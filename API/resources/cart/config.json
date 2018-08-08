@@ -8,14 +8,6 @@
 			"required": false,
 			"id": "product",
 			"order": 0
-		},
-		"price": {
-			"name": "price",
-			"type": "number",
-			"typeLabel": "number",
-			"required": false,
-			"id": "price",
-			"order": 1
 		}
 	}
 }
