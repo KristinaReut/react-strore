@@ -1,21 +1,29 @@
 {
 	"type": "Collection",
 	"properties": {
-		"product": {
-			"name": "product",
-			"type": "object",
-			"typeLabel": "object",
+		"products": {
+			"name": "products",
+			"type": "array",
+			"typeLabel": "array",
 			"required": false,
-			"id": "product",
+			"id": "products",
 			"order": 0
 		},
-		"price": {
-			"name": "price",
+		"totalPrice": {
+			"name": "totalPrice",
 			"type": "number",
 			"typeLabel": "number",
 			"required": false,
-			"id": "price",
+			"id": "totalPrice",
 			"order": 1
+		},
+		"count": {
+			"name": "count",
+			"type": "object",
+			"typeLabel": "object",
+			"required": false,
+			"id": "count",
+			"order": 2
 		}
 	}
 }

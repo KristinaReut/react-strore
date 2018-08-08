@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { getAllCart } from '../api';
+import { getAllCart, createOrder } from '../api';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Table from '@material-ui/core/Table';
@@ -11,6 +11,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { throws } from 'assert';
 
 
 const CustomTableCell = withStyles(theme => ({
@@ -53,25 +54,93 @@ const styles = theme => ({
 class Cart extends Component {
   state = {
     products: [],
+    count: {},
+    totalPrice: 0,
   }
   loadAllCart = () => {
     getAllCart().then(products => {
-      
-      this.setState({ products });
+      const sortProducts = products.reduce((obj, key) => {
+        obj[key.product.id] = (obj[key.product.id] || 0) + 1;
+        return obj;
+      }, {});
+      this.setState({
+        count: sortProducts
+      });
+      const newProducts = products.map(el => {
+        return el.product
+      })
+      var uniqueProducts = []
+      for (var i = 0; i < newProducts.length; i++) {
+        for (var j = i + 1; j < newProducts.length; j++) {
+          if (newProducts[i].id !== newProducts[j].id) {
+            j++
+          }
+          else {
+            i++
+          }
+        }
+        uniqueProducts.push(newProducts[i])
+      }
+      this.setState({
+        products: uniqueProducts
+      })
     });
-
   };
+  handleClickPlus = (id) => {
+    this.setState(prevState => ({
+      count: {
+          ...prevState.count,
+          [id]: this.state.count[id] += 1
+      }
+  }))
+  }
+  handleClickMinus = (id) => {
+    this.setState(prevState => ({
+      count: {
+          ...prevState.count,
+          [id]: this.state.count[id] -= 1
+      }
+  }))
+  if (this.state.count[id] <= 0 )
+  {
+    remove(product) {
+      this.setState((prevState) => ({
+        products: prevState.products.filter((_, product) => product !== product)
+      }));
+    }
+  }
+  }
+  totalPrice  = (id) => {
+    var arr = this.state.products
+    console.log(arr)
+    this.setState ({
 
+      
+      })
+  }
+  
+ 
+
+  
+ 
+  handleSubmit = (id) => {
+    const { products, count, totalPrice } = this.state;
+    createOrder({
+      products: products,
+      count: count,
+      totalPrice: totalPrice,
+    });
+  }
   componentWillMount() {
     this.loadAllCart()
   }
 
 
+
   render() {
-    const { classes, } = this.props;
-    const { products } = this.state;
-    // console.log(products)
-    const count = 1;
+    const { classes, product } = this.props;
+    const { products, count, totalPrice } = this.state;
+
     return (
       <div>
         <Paper className={classes.root}>
@@ -89,32 +158,33 @@ class Cart extends Component {
                 return (
                   <TableRow className={classes.row}>
                     <CustomTableCell component="th" scope="row">
-                      <h2>{product.product.productName}</h2>
+                      <h2>{product.productName}</h2>
                       <br />
-                      category - {product.product.category}
+                      category - {product.category}
                       <br />
-                      color - {product.product.color}
+                      color - {product.color}
                       <br />
-                      description- {product.product.description}
+                      description- {product.description}
                     </CustomTableCell>
-                    <CustomTableCell>{count}</CustomTableCell>
+                    <CustomTableCell>{count[product.id]}</CustomTableCell>
                     <CustomTableCell>
-                      <Button color="primary" className={classes.button} onClick={count + 1}>
+                      <Button color="primary" className={classes.button} onClick={() => this.handleClickPlus(product.id)}>
                         +
                   </Button>
-                      <Button color="secondary" className={classes.button} onClick={count + 1}>
+                      <Button color="secondary" className={classes.button} onClick={() => this.handleClickMinus(product.id)}>
                         -
                    </Button>
                     </CustomTableCell>
-                    <CustomTableCell numeric>{count * product.product.price}$ </CustomTableCell>
+                    <CustomTableCell numeric>{count[product.id] * product.price}$ </CustomTableCell>
                   </TableRow>
                 );
               })}
             </TableBody>
           </Table>
         </Paper>
-        <h1>Total price: {}$</h1>
-        <Button variant="contained" size="medium" color="primary" className={classes.button}>
+        <h1>Total price: {() => this.totalPrice()} $</h1>
+        <Button variant="contained" size="medium" color="primary" className={classes.button}
+          onClick={() => this.handleSubmit(products, count, totalPrice)}>
           Order
         </Button>
       </div>
