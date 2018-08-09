@@ -3,6 +3,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { getAllOrders } from '../api';
 
 const styles = theme => ({
     root: {
@@ -15,16 +16,36 @@ const styles = theme => ({
     },
   });
 
+
 class OrdersTableRow extends Component {
+  state = {
+    order: [],
+    }
+    
+  
 
     render() {
-
+      const {  index, order } = this.props;
+      console.log(order)
         return (
             <TableRow>
             <TableCell component="th" scope="row">
+            {index + 1}
             </TableCell>
-            <TableCell numeric></TableCell>
-            <TableCell numeric></TableCell>
+            <TableCell> 
+            {order.id}
+            </TableCell>
+            <TableCell numeric>Name of Product - {order.products.productName}
+            <br />
+            Category -
+            <br />
+            Color -
+            <br />
+            Image -
+            <br />
+            Count -
+            </TableCell>
+            <TableCell numeric>{order.totalPrice}$</TableCell>
             <TableCell numeric></TableCell>
             <TableCell numeric></TableCell>
           </TableRow>

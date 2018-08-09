@@ -82,6 +82,7 @@ class AllProducts extends Component {
     createCart({ product: product[0] });
   }
 
+
   render() {
     const { classes } = this.props;
     const { products } = this.state

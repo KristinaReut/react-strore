@@ -44,6 +44,7 @@ const deleteRequest = url => {
 export const getAllCategories = () => getRequest('/categories');
 export const getAllProducts = () => getRequest('/products');
 export const createCart = (data) => postRequest('/cart', data);
+export const deleteCart = (id) => deleteRequest(`/cart/${id}`);
 export const createOrder = (data) => postRequest('/orders', data);
 export const getAllCart = () => getRequest('/cart');
 export const getAllOrders = () => getRequest('/orders');

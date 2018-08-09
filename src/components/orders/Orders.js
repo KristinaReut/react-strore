@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import OrdersTableRow from './OrdersTableRow';
+import { getAllOrders } from '../api';
 
 const styles = theme => ({
   root: {
@@ -21,8 +22,25 @@ const styles = theme => ({
 });
 
 class Orders extends Component {
+  state = {
+    orders: [],
+    count: [],
+    products: [],
+    totalPrice: ""
+  }
+  loadAllOrders = () => {
+    getAllOrders().then(orders => {
+      this.setState({ orders});
+    });
+   
+  };
+  componentDidMount() {
+    this.loadAllOrders();
+  }
     render() {
       const {classes} = this.props;
+      const { orders } = this.state;
+      console.log(orders)
       return (
 
            <div>
@@ -31,6 +49,7 @@ class Orders extends Component {
         <TableHead>
           <TableRow>
             <TableCell>№</TableCell>
+            <TableCell>Id of client</TableCell>
             <TableCell numeric>Products</TableCell>
             <TableCell numeric>Total Price</TableCell>
             <TableCell numeric>Status</TableCell>
@@ -38,7 +57,15 @@ class Orders extends Component {
           </TableRow>
         </TableHead>
         <TableBody>
-             <OrdersTableRow />
+        {
+                orders.map((order, index) => {
+                    return (
+                      <OrdersTableRow
+                        index={index}
+                        order={order}
+                      />)
+                })
+              }
         </TableBody>
       </Table>
     </Paper>
