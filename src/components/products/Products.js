@@ -58,7 +58,8 @@ class Products extends Component {
     filter: {
       query: '',
     },
-    
+    count: ''
+
   }
   handleFilterChange = name => event => {
     const { filter, products } = this.state;
@@ -111,7 +112,7 @@ class Products extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.productName.trim().length > 0 && this.state.price.trim().length > 0 && this.state.color.trim().length > 0 && this.state.image.trim().length > 0) {
-      const { productName, price, color, description, category, image } = this.state;
+      const { productName, price, color, description, category, image, count } = this.state;
       this.setState({
         productName: '',
         price: '',
@@ -119,8 +120,9 @@ class Products extends Component {
         description: '',
         category: '',
         image: '',
+        count: ''
       });
-      createProduct({ productName, price, color, description, category, image }).then(this.loadProducts);
+      createProduct({ productName, price, color, description, category, image, count }).then(this.loadProducts);
     }
   }
   deleteProduct = (id) => {
@@ -150,7 +152,7 @@ class Products extends Component {
           margin="normal"
           onChange={this.handleFilterChange('query')}
         />
-       
+
         <Paper className={classes.root}>
           <Table className={classes.table}>
             <TableHead>

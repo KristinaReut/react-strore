@@ -74,12 +74,13 @@ class AllProducts extends Component {
   };
   handleSubmit = (id) => {
     const { products } = this.state;
+    const { addProductInCart } = this.props
     const product = products.filter(product => {
       if (product.id == id) {
         return true
       }
     })
-    createCart({ product: product[0] });
+    addProductInCart(product)
   }
 
 

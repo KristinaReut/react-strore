@@ -32,18 +32,23 @@ class OrdersTableRow extends Component {
             <TableCell component="th" scope="row">
             {index + 1}
             </TableCell>
-            <TableCell> 
-            {order.id}
-            </TableCell>
-            <TableCell numeric>Name of Product - {order.products.productName}
+            <TableCell numeric>
+            {order.products.map((product, index) => {
+            return (
+              <li>
+            Name of Product - {order.products[index].productName}
             <br />
-            Category -
+            Category - {order.products[index].category}
             <br />
-            Color -
+            Color - {order.products[index].color}
             <br />
-            Image -
+            Description - {order.products[index].descriprion}
             <br />
-            Count -
+            Count  - {order.products[index].count}
+            </li>
+            )
+            })
+            }
             </TableCell>
             <TableCell numeric>{order.totalPrice}$</TableCell>
             <TableCell numeric></TableCell>

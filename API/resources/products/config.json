@@ -64,6 +64,14 @@
 			"required": false,
 			"id": "engine",
 			"order": 7
+		},
+		"count": {
+			"name": "count",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "count",
+			"order": 8
 		}
 	}
 }

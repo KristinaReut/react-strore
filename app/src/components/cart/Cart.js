@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { getAllCart, createOrder, deleteCart } from '../api';
+import { createOrder } from '../api';
 import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -52,74 +52,29 @@ const styles = theme => ({
 
 class Cart extends Component {
   state = {
-    products: [],
-    count: {},
     totalPrice: 0,
-    allProducts: []
   }
-  loadAllCart = () => {
-    getAllCart().then(products => {
-      this.setState({
-        allProducts: products
-      })
-      const sortProducts = products.reduce((obj, key) => {
-        obj[key.product.id] = (obj[key.product.id] || 0) + 1;
-        return obj;
-      }, {});
-      this.setState({
-        count: sortProducts
-      });
-      const newProducts = products.map(el => {
-        return el.product
-      })
-      var uniqueProducts = []
-      for (var i = 0; i < newProducts.length; i++) {
-        for (var j = i + 1; j < newProducts.length; j++) {
-          if (newProducts[i].id !== newProducts[j].id) {
-            j++
-          }
-          else {
-            i++
-          }
-        }
-        uniqueProducts.push(newProducts[i])
-      }
-      this.setState({
-        products: uniqueProducts
-      })
-      this.totalPrice()
-    })
-  };
+
   handleClickPlus = (id) => {
-    this.setState(prevState => ({
-      count: {
-        ...prevState.count,
-        [id]: this.state.count[id] += 1
-      }
-    }))
-    setTimeout(
-      () => this.totalPrice(),
-      100
-    );
+    const { handleClickPlus } = this.props
+    handleClickPlus(id)
+    this.totalPrice()
   }
+
   handleClickMinus = (id) => {
-    if (this.state.count[id] != 1) {
-      this.setState(prevState => ({
-        count: {
-          ...prevState.count,
-          [id]: this.state.count[id] -= 1
-        }
-      }))
-      setTimeout(
-        () => this.totalPrice(),
-        100
-      );
-    }
+    const { handleClickMinus } = this.props
+    handleClickMinus(id)
+    this.totalPrice()
+  }
+  deleteFromCart = (id) => {
+    const { deleteFromCart } = this.props
+    deleteFromCart(id)
+    this.totalPrice()
   }
   totalPrice = () => {
-    const products = this.state.products;
+    const products = this.props.products
     const arr = products.map(product => {
-      return (product.price * this.state.count[product.id])
+      return (product.price * product.count)
     })
     var totalSum = 0
     for (var i = 0; i < arr.length; i++) {
@@ -129,36 +84,27 @@ class Cart extends Component {
       totalPrice: totalSum
     })
   }
-  deleteFromCart = (id) => {
-    const product = this.state.allProducts.find(el => {
-      return (el.product.id === id)
-    })
-    const newId = product.id
-    deleteCart(newId).then(this.loadAllCart())
-  }
 
-
-
-
-  handleSubmit = (id) => {
-    const { products, count, totalPrice } = this.state;
+  handleAddOrder = () => {
+    const totalPrice = this.state.totalPrice;
+    const products = this.props.products;
+    console.log(products)
     createOrder({
       products: products,
-      count: count,
       totalPrice: totalPrice,
     })
   }
+
   componentDidMount() {
-    this.loadAllCart()
     this.totalPrice()
   }
 
 
 
   render() {
-    const { classes, product } = this.props;
-    const { products, count, totalPrice } = this.state;
-   
+    const { classes, products } = this.props;
+    const { totalPrice } = this.state;
+    console.log(totalPrice);
     return (
       <div>
         <Paper className={classes.root}>
@@ -184,7 +130,7 @@ class Cart extends Component {
                       <br />
                       description- {product.description}
                     </CustomTableCell>
-                    <CustomTableCell>{count[product.id]}</CustomTableCell>
+                    <CustomTableCell>{product.count}</CustomTableCell>
                     <CustomTableCell>
                       <Button color="primary" className={classes.button} onClick={() => this.handleClickPlus(product.id)}>
                         +
@@ -196,7 +142,7 @@ class Cart extends Component {
                         onClick={() => this.deleteFromCart(product.id)}
                       >Delete</Button>
                     </CustomTableCell>
-                    <CustomTableCell numeric>{count[product.id] * product.price}$ </CustomTableCell>
+                    <CustomTableCell numeric>{product.count * product.price}$ </CustomTableCell>
                   </TableRow>
                 );
               })}
@@ -205,7 +151,7 @@ class Cart extends Component {
         </Paper>
         <h1>Total price: {this.state.totalPrice} $</h1>
         <Button variant="contained" size="medium" color="primary" className={classes.button}
-          onClick={() => this.handleSubmit(products, count, totalPrice)}>
+          onClick={() => this.handleAddOrder(totalPrice)}>
           Order
         </Button>
       </div>

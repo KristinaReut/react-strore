@@ -40,7 +40,7 @@ class Orders extends Component {
     render() {
       const {classes} = this.props;
       const { orders } = this.state;
-      console.log(orders)
+
       return (
 
            <div>
@@ -49,7 +49,6 @@ class Orders extends Component {
         <TableHead>
           <TableRow>
             <TableCell>№</TableCell>
-            <TableCell>Id of client</TableCell>
             <TableCell numeric>Products</TableCell>
             <TableCell numeric>Total Price</TableCell>
             <TableCell numeric>Status</TableCell>
