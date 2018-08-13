@@ -71,7 +71,6 @@ class App extends React.Component {
  
   handleClickMinus = (id) => {
     const products = this.state.products
-    console.log(products)
     const index = this.state.products.findIndex(el => el.id === id)
     if (this.state.products[index].count != 1)
    { this.state.products[index].count--
@@ -80,11 +79,15 @@ class App extends React.Component {
  
   deleteFromCart = (id) => {
     const products = this.state.products
-    
     const index = this.state.products.findIndex(el => el.id === id)
-    this.state.products[index]
-    this.setState({ products })
+     products[index].count = 0
+    this.setState(prevState => ({
+      products: prevState.products.filter(el => el.id != id),
+    }));
+
+    
   }
+
 
   
   AllProducts = props => (

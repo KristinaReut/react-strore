@@ -70,6 +70,7 @@ class Cart extends Component {
     deleteFromCart(id)
     this.totalPrice()
   }
+  
   totalPrice = () => {
     const products = this.props.products
     const arr = products.map(product => {
@@ -87,7 +88,6 @@ class Cart extends Component {
   handleAddOrder = () => {
     const totalPrice = this.state.totalPrice;
     const products = this.props.products;
-    console.log(products)
     if (totalPrice != 0) {
     createOrder({
       products: products,
@@ -106,7 +106,7 @@ class Cart extends Component {
   render() {
     const { classes, products } = this.props;
     const { totalPrice } = this.state;
-    console.log(totalPrice);
+  
     
       
 {if (this.state.totalPrice != 0) {

@@ -16,16 +16,26 @@ const styles = theme => ({
     },
   });
 
-
+  
 class OrdersTableRow extends Component {
   state = {
     order: [],
+    orders: []
     }
     
-  
+    loadAllOrders = () => {
+      getAllOrders().then(orders => {
+        this.setState({ orders});
+      });
+     
+    };
+    componentDidMount() {
+      this.loadAllOrders();
+    }
 
     render() {
       const {  index, order } = this.props;
+      const { orders } = this.state;
       console.log(order)
         return (
             <TableRow>

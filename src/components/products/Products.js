@@ -62,7 +62,7 @@ class Products extends Component {
     filter: {
       query: '',
     },
-    count: ''
+    count: '',
 
   }
   handleFilterChange = name => event => {
