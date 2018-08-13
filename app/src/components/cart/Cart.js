@@ -70,6 +70,11 @@ class Cart extends Component {
     deleteFromCart(id)
     this.totalPrice()
   }
+  updateCart = () => {
+    const { updateCart } = this.props
+    updateCart()
+    this.setState({totalPrice: 0,})
+  }
   
   totalPrice = () => {
     const products = this.props.products
@@ -92,7 +97,7 @@ class Cart extends Component {
     createOrder({
       products: products,
       totalPrice: totalPrice,
-    })
+    }).then(this.updateCart)
   } 
   else {alert("Your card now is empty! Please, add products!")}
 }

@@ -84,8 +84,11 @@ class App extends React.Component {
     this.setState(prevState => ({
       products: prevState.products.filter(el => el.id != id),
     }));
-
-    
+  }
+ updateCart = () => {
+    const products = this.state.products
+     products.count = 0
+  
   }
 
 
@@ -94,7 +97,7 @@ class App extends React.Component {
     <AllProducts {...props} addProductInCart={this.addProductInCart} />
   );
   Cart = props => (
-    <Cart {...props} products={this.state.products} handleClickPlus={this.handleClickPlus} handleClickMinus={this.handleClickMinus} deleteFromCart={this.deleteFromCart} />
+    <Cart {...props} products={this.state.products} handleClickPlus={this.handleClickPlus} handleClickMinus={this.handleClickMinus} deleteFromCart={this.deleteFromCart} updateCart={this.updateCart}/>
   );
 
   render() {
