@@ -1,0 +1,37 @@
+ <Paper className={classes.root}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <CustomTableCell>Name</CustomTableCell>
+              <CustomTableCell>Price</CustomTableCell>
+              <CustomTableCell>Category</CustomTableCell>
+              <CustomTableCell>Description</CustomTableCell>
+              <CustomTableCell>Image</CustomTableCell>
+              <CustomTableCell>Color</CustomTableCell>
+              <CustomTableCell>Add to cart</CustomTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {products.map(product => {
+              return (
+                <TableRow className={classes.row}>
+                  <CustomTableCell component="th" scope="row">
+                    {product.productName}
+                  </CustomTableCell>
+                  <CustomTableCell>{product.price}$</CustomTableCell>
+                  <CustomTableCell>{product.category}</CustomTableCell>
+                  <CustomTableCell>{product.description}</CustomTableCell>
+                  <CustomTableCell>{product.image}</CustomTableCell>
+                  <CustomTableCell>{product.color}</CustomTableCell>
+                  <CustomTableCell>
+                    <Button color="primary"  className={classes.button} variant="contained"
+                      onClick={() => this.handleSubmit(product.id)}>
+                      Add to cart
+                    </Button>
+                  </CustomTableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+ </Paper>

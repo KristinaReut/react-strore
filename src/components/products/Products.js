@@ -36,8 +36,12 @@ const styles = theme => ({
     minWidth: 700,
   },
   button: {
-    margin: theme.spacing.unit,
+    marginTop: 27,
+    width: 150,
+    height: 20,
     backgroundColor: 'green',
+    
+
   },
   input: {
     display: 'none',
@@ -244,7 +248,7 @@ class Products extends Component {
             value={color}
             onChange={this.handleChange('color')}
           />
-          < Button variant="contained" size="small" color="primary" className={classes.button} onClick={this.handleSubmit} disabled={this.state.disabled}>
+          < Button variant="contained"  color="primary" className={classes.button} onClick={this.handleSubmit} disabled={this.state.disabled}>
             Add Product
       </Button>
         </form>

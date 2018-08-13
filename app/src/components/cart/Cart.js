@@ -25,12 +25,12 @@ const CustomTableCell = withStyles(theme => ({
 
 const styles = theme => ({
   root: {
-    width: '80%',
+    width: '100%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },
   table: {
-    minWidth: 500,
+    minWidth: 700,
   },
   row: {
     '&:nth-of-type(odd)': {
@@ -39,7 +39,6 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit,
-    fontSize: 20,
   },
   extendedIcon: {
     marginRight: theme.spacing.unit,
@@ -89,11 +88,14 @@ class Cart extends Component {
     const totalPrice = this.state.totalPrice;
     const products = this.props.products;
     console.log(products)
+    if (totalPrice != 0) {
     createOrder({
       products: products,
       totalPrice: totalPrice,
     })
-  }
+  } 
+  else {alert("Your card now is empty! Please, add products!")}
+}
 
   componentDidMount() {
     this.totalPrice()
@@ -105,6 +107,9 @@ class Cart extends Component {
     const { classes, products } = this.props;
     const { totalPrice } = this.state;
     console.log(totalPrice);
+    
+      
+{if (this.state.totalPrice != 0) {
     return (
       <div>
         <Paper className={classes.root}>
@@ -112,9 +117,10 @@ class Cart extends Component {
             <TableHead>
               <TableRow>
                 <CustomTableCell>Your order</CustomTableCell>
-                <CustomTableCell>Count</CustomTableCell>
-                <CustomTableCell></CustomTableCell>
                 <CustomTableCell>Price</CustomTableCell>
+                <CustomTableCell>Quantity of product</CustomTableCell>
+                <CustomTableCell>Total price</CustomTableCell>
+                <CustomTableCell>Delete</CustomTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -127,37 +133,49 @@ class Cart extends Component {
                       category - {product.category}
                       <br />
                       color - {product.color}
-                      <br />
-                      description- {product.description}
                     </CustomTableCell>
-                    <CustomTableCell>{product.count}</CustomTableCell>
+                    <CustomTableCell>{product.price}$</CustomTableCell>
                     <CustomTableCell>
+                     
                       <Button color="primary" className={classes.button} onClick={() => this.handleClickPlus(product.id)}>
                         +
                   </Button>
+                  {product.count}
                       <Button color="secondary" className={classes.button} onClick={() => this.handleClickMinus(product.id)}>
                         -
                    </Button>
+                   
+                   </CustomTableCell>
+                   
+                   <CustomTableCell>{product.count * product.price}$ </CustomTableCell>
+                   <CustomTableCell>
                       <Button variant="contained" color="secondary" className={classes.button} type="submit"
                         onClick={() => this.deleteFromCart(product.id)}
                       >Delete</Button>
-                    </CustomTableCell>
-                    <CustomTableCell numeric>{product.count * product.price}$ </CustomTableCell>
+                  </CustomTableCell>
+                  
                   </TableRow>
                 );
               })}
             </TableBody>
           </Table>
         </Paper>
-        <h1>Total price: {this.state.totalPrice} $</h1>
-        <Button variant="contained" size="medium" color="primary" className={classes.button}
+        <h3>Total price: {this.state.totalPrice} $ <Button variant="contained"  color="primary" className={classes.button}
           onClick={() => this.handleAddOrder(totalPrice)}>
-          Order
-        </Button>
+          Submit
+        </Button></h3>
+    
+        
       </div>
     );
   }
 }
+return (
+  <h3>Your cart is empty now. Please, add products.</h3>
+) 
+}
+}
+
 Cart.propTypes = {
   classes: PropTypes.object.isRequired,
 };

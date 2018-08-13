@@ -21,7 +21,7 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200,
+    width: 110,
   },
   menu: {
     width: 200,
@@ -30,12 +30,15 @@ const styles = theme => ({
     display: 'none',
   },
   root: {
-    width: '60%',
+    width: '100%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },
   button: {
-    margin: theme.spacing.unit,
+ 
+    width: 145,
+    height: 30,
+    marginTop : 27
   },
 });
 
@@ -97,7 +100,7 @@ class Categories extends Component {
             <TableHead>
               <TableRow>
                 <TableCell>№</TableCell>
-                <TableCell numeric>Category</TableCell>
+                <TableCell>Category</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>

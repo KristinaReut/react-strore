@@ -32,27 +32,28 @@ class OrdersTableRow extends Component {
             <TableCell component="th" scope="row">
             {index + 1}
             </TableCell>
-            <TableCell numeric>
+            <TableCell>
             {order.products.map((product, index) => {
             return (
-              <li>
-            Name of Product - {order.products[index].productName}
+              <ul style={{display: "inline-block"}}>
+              <li style={{listStyle: "none"}} >
+              
+            <h3>{index + 1}.{order.products[index].productName}</h3>
             <br />
             Category - {order.products[index].category}
             <br />
-            Color - {order.products[index].color}
+            Price - {order.products[index].price} $
             <br />
-            Description - {order.products[index].descriprion}
+            Color - {order.products[index].color}
             <br />
             Count  - {order.products[index].count}
             </li>
+            </ul>
             )
             })
             }
             </TableCell>
-            <TableCell numeric>{order.totalPrice}$</TableCell>
-            <TableCell numeric></TableCell>
-            <TableCell numeric></TableCell>
+            <TableCell>{order.totalPrice}$</TableCell>
           </TableRow>
         )
     }

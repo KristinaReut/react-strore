@@ -13,7 +13,6 @@ import StarIcon from '@material-ui/icons/Star';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import Products from './components/products/Products';
 import Orders from './components/orders/Orders';
-import Customers from './components/Customers';
 import Categories from './components/categories/Categories';
 
 const drawerWidth = 240;
@@ -81,12 +80,7 @@ function ClippedDrawer(props) {
               </ListItemIcon>
               <ListItemText inset primary="Orders" />
             </ListItem>
-            <ListItem button button component={props => <Link to="/customers" {...props} />}>
-              <ListItemIcon>
-                <StarIcon />
-              </ListItemIcon>
-              <ListItemText inset primary="Customers" />
-            </ListItem>
+            
           </List>
         </Drawer>
         <main className={classes.content}>
@@ -95,7 +89,7 @@ function ClippedDrawer(props) {
             <Route exact path="/" component={Categories} />
             <Route path="/products" component={Products} />
             <Route path="/orders" component={Orders} />
-            <Route path="/customers" component={Customers} />
+      
           </Switch>
         </main>
       </div>

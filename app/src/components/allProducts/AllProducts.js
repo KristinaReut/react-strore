@@ -3,46 +3,56 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { getAllProducts, getAllCategories, updatedProduct, createCart } from '../api';
 import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import IconButton from '@material-ui/core/IconButton';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 
-const CustomTableCell = withStyles(theme => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
+
+
 
 const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
-  },
-  table: {
-    minWidth: 700,
-  },
-  row: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.background.default,
-    },
-  },
   button: {
     margin: theme.spacing.unit,
   },
-  extendedIcon: {
-    marginRight: theme.spacing.unit,
+  card: {
+    width: 310,
+    height: 550,
+    marginTop: 50,
+    marginBottom: 50, 
+    marginLeft: 55, 
+    display: 'inline-block',
   },
-  icon: {
+  media: {
+    height: 0,
+    paddingTop: '100%', 
+   
+  },
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+  },
+  gridList: {
+    flexWrap: 'nowrap',
+    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+    transform: 'translateZ(0)',
+  },
+  title: {
     color: 'white',
+  },
+  titleBar: {
+    background:
+    'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+    'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
 });
 
@@ -88,43 +98,63 @@ class AllProducts extends Component {
     const { classes } = this.props;
     const { products } = this.state
     return (
-      <Paper className={classes.root}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <CustomTableCell>Name</CustomTableCell>
-              <CustomTableCell numeric>Price</CustomTableCell>
-              <CustomTableCell numeric>Category</CustomTableCell>
-              <CustomTableCell numeric>Description</CustomTableCell>
-              <CustomTableCell numeric>Image</CustomTableCell>
-              <CustomTableCell numeric>Color</CustomTableCell>
-              <CustomTableCell numeric>Add to cart</CustomTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {products.map(product => {
-              return (
-                <TableRow className={classes.row}>
-                  <CustomTableCell component="th" scope="row">
-                    {product.productName}
-                  </CustomTableCell>
-                  <CustomTableCell numeric>{product.price}$</CustomTableCell>
-                  <CustomTableCell numeric>{product.category}</CustomTableCell>
-                  <CustomTableCell numeric>{product.description}</CustomTableCell>
-                  <CustomTableCell numeric>{product.image}</CustomTableCell>
-                  <CustomTableCell numeric>{product.color}</CustomTableCell>
-                  <CustomTableCell numeric>
-                    <Button variant="fab" color="primary" aria-label="Add" className={classes.button}
-                      onClick={() => this.handleSubmit(product.id)}>
-                      <AddIcon />
-                    </Button>
-                  </CustomTableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </Paper>
+     <div>
+       <h1>Top</h1>
+        <div className={classes.root}>
+      <GridList className={classes.gridList} cols={2.5}>
+        {products.map(product => (
+          <GridListTile key={product.image}>
+            <img src={product.image} />
+            <GridListTileBar
+              title = {product.productName} 
+              classes={{
+                root: classes.titleBar,
+                title: classes.title,
+              }}
+              actionIcon={
+                <Button size="small" style= {{color: "white"}} onClick={() => this.handleSubmit(product.id)}>
+                 Add to cart 
+               </Button>
+              }
+            />
+            
+          </GridListTile>
+        ))}
+      </GridList>
+    </div>
+    <h1>Products</h1>
+       {products.map(product => {
+           return (
+          
+       <Card className={classes.card}>
+        <CardMedia
+          className={classes.media}
+          image={product.image}
+        />
+        <CardContent>
+          <Typography gutterBottom variant="headline" component="h1">
+          {product.productName},    {product.price}$ 
+          </Typography>
+          <Typography component="p">
+         Category: {product.category}
+         <br />
+         Description: {product.description}
+         <br />
+         Color: {product.color}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small" color="primary"onClick={() => this.handleSubmit(product.id)}>
+           Add to cart
+          </Button>
+        </CardActions>
+      </Card>
+    
+        );
+      })}
+    </div>
+    
+     
     );
   }
 }

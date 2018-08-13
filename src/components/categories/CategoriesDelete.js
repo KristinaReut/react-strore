@@ -22,13 +22,13 @@ class CategoriesDelete extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <div>
+          
                 <Button variant="contained" color="secondary" className={classes.button} type="submit"
                     onClick={this.deleteCategory}
                 >
                     Delete
           </Button>
-            </div>
+          
         )
     }
 }

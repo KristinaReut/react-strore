@@ -49,10 +49,8 @@ class Orders extends Component {
         <TableHead>
           <TableRow>
             <TableCell>№</TableCell>
-            <TableCell numeric>Products</TableCell>
-            <TableCell numeric>Total Price</TableCell>
-            <TableCell numeric>Status</TableCell>
-            <TableCell numeric>Info</TableCell>
+            <TableCell>Products</TableCell>
+            <TableCell>Total Price</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
