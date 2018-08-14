@@ -36,7 +36,7 @@ class OrdersTableRow extends Component {
     render() {
       const {  index, order } = this.props;
       const { orders } = this.state;
-      console.log(order)
+      
         return (
             <TableRow>
             <TableCell component="th" scope="row">

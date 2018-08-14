@@ -40,7 +40,7 @@ const styles = theme => ({
     width: 150,
     height: 20,
     backgroundColor: 'green',
-    
+
 
   },
   input: {
@@ -59,6 +59,7 @@ class Products extends Component {
     image: '',
     filteredProducts: [],
     categories: [],
+    featured: false,
     filter: {
       query: '',
     },
@@ -132,6 +133,9 @@ class Products extends Component {
   deleteProduct = (id) => {
     deleteProduct(id).then(this.loadProducts)
   }
+  checkedProduct = (id, check) => {
+    updatedProduct(id, { featured: check }).then(this.loadProducts)
+  }
   updateProduct = (id, updateProduct) => {
     updatedProduct(id, {
       productName: updateProduct.productName,
@@ -180,6 +184,7 @@ class Products extends Component {
                     product={product}
                     deleteProduct={this.deleteProduct}
                     updateProduct={this.updateProduct}
+                    checkedProduct={this.checkedProduct}
                   />
                 ))
               }
@@ -248,7 +253,7 @@ class Products extends Component {
             value={color}
             onChange={this.handleChange('color')}
           />
-          < Button variant="contained"  color="primary" className={classes.button} onClick={this.handleSubmit} disabled={this.state.disabled}>
+          < Button variant="contained" color="primary" className={classes.button} onClick={this.handleSubmit} disabled={this.state.disabled}>
             Add Product
       </Button>
         </form>

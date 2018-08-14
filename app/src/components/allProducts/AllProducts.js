@@ -97,12 +97,15 @@ class AllProducts extends Component {
   render() {
     const { classes } = this.props;
     const { products } = this.state
+    
     return (
      <div>
        <h1>Top</h1>
         <div className={classes.root}>
       <GridList className={classes.gridList} cols={2.5}>
-        {products.map(product => (
+        {products.map(product => {
+          if (product.featured == true) {
+            return(
           <GridListTile key={product.image}>
             <img src={product.image} />
             <GridListTileBar
@@ -113,13 +116,15 @@ class AllProducts extends Component {
               }}
               actionIcon={
                 <Button size="small" style= {{color: "white"}} onClick={() => this.handleSubmit(product.id)}>
+                 {product.price}$
+                 <br />
                  Add to cart 
                </Button>
               }
             />
-            
-          </GridListTile>
-        ))}
+          </GridListTile> )}
+          else { return (null) }
+        })} 
       </GridList>
     </div>
     <h1>Products</h1>

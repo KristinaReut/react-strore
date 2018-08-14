@@ -8,6 +8,7 @@ import ProductsDelete from './ProductsDelete'
 import ProductsEdit from './ProductsEdit'
 
 
+
 const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
@@ -24,8 +25,7 @@ const styles = theme => ({
 
 class ProductsTableRow extends Component {
   state = {
-  product: "",
-  checkedA: false,
+    checked: false,
   }
   deleteProduct = (id) => {
     const { deleteProduct } = this.props
@@ -35,17 +35,23 @@ class ProductsTableRow extends Component {
     const { updateProduct } = this.props
     updateProduct(id, data)
   }
-  
+
+
 
   handleChange = name => event => {
-    this.setState({ [name]: event.target.checked });
-    console.log(this.state)
+    this.setState({
+      [name]: event.target.checked
+    });
+    setTimeout(() => {
+      const data = this.state.checked;
+      const { checkedProduct, product } = this.props
+      checkedProduct(product.id, data)
+    }, 300)
   };
+
   render() {
     const { product } = this.props;
     const { index } = this.props;
-
-
     return (
       <TableRow>
         <TableCell component="th" scope="row">{index + 1}</TableCell>
@@ -60,10 +66,9 @@ class ProductsTableRow extends Component {
           <ProductsEdit product={product} updateProduct={this.updateProduct} loadAllProducts={this.loadAllProducts} />
         </TableCell>
         <TableCell numeric> <Checkbox
-          checked={this.state.checkedA}
-          onChange={this.handleChange('checkedA')}
-          value="checkedA"
-          featured={this.state.checkedA}
+          checked={this.state.checked}
+          onClick={this.handleChange("checked")}
+          value="featured"
         /> </TableCell>
       </TableRow>
 
