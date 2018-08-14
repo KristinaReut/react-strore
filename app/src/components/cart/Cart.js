@@ -10,7 +10,12 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { throws } from 'assert';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+
+
 
 
 const CustomTableCell = withStyles(theme => ({
@@ -52,8 +57,19 @@ const styles = theme => ({
 class Cart extends Component {
   state = {
     totalPrice: 0,
+    open: false,
+  }
+  handleClose = () => {
+    this.setState({
+      open: false
+    })
   }
 
+  openDialog = () => {
+    this.setState({
+      open: true
+    })
+  }
   handleClickPlus = (id) => {
     const { handleClickPlus } = this.props
     handleClickPlus(id)
@@ -73,7 +89,7 @@ class Cart extends Component {
   updateCart = () => {
     const { updateCart } = this.props
     updateCart()
-    this.setState({totalPrice: 0,})
+    this.setState({totalPrice: 0})
   }
   
   totalPrice = () => {
@@ -97,16 +113,17 @@ class Cart extends Component {
     createOrder({
       products: products,
       totalPrice: totalPrice,
-    }).then(this.updateCart)
+    }).then(this.openDialog)
+    
   } 
-  else {alert("Your card now is empty! Please, add products!")}
+  const {cleanState} = this.props
 }
 
   componentDidMount() {
     this.totalPrice()
   }
 
-
+  
 
   render() {
     const { classes, products } = this.props;
@@ -114,70 +131,89 @@ class Cart extends Component {
   
     
       
-{if (this.state.totalPrice != 0) {
-    return (
-      <div>
-        <Paper className={classes.root}>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <CustomTableCell>Your order</CustomTableCell>
-                <CustomTableCell>Price</CustomTableCell>
-                <CustomTableCell>Quantity of product</CustomTableCell>
-                <CustomTableCell>Total price</CustomTableCell>
-                <CustomTableCell>Delete</CustomTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {products.map(product => {
-                return (
-                  <TableRow className={classes.row}>
-                    <CustomTableCell component="th" scope="row">
-                      <h2>{product.productName}</h2>
-                      <br />
-                      category - {product.category}
-                      <br />
-                      color - {product.color}
-                    </CustomTableCell>
-                    <CustomTableCell>{product.price}$</CustomTableCell>
-                    <CustomTableCell>
-                     
-                      <Button color="primary" className={classes.button} onClick={() => this.handleClickPlus(product.id)}>
-                        +
-                  </Button>
-                  {product.count}
-                      <Button color="secondary" className={classes.button} onClick={() => this.handleClickMinus(product.id)}>
-                        -
-                   </Button>
-                   
-                   </CustomTableCell>
-                   
-                   <CustomTableCell>{product.count * product.price}$ </CustomTableCell>
-                   <CustomTableCell>
-                      <Button variant="contained" color="secondary" className={classes.button} type="submit"
-                        onClick={() => this.deleteFromCart(product.id)}
-                      >Delete</Button>
-                  </CustomTableCell>
-                  
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </Paper>
-        <h3>Total price: {this.state.totalPrice} $ <Button variant="contained"  color="primary" className={classes.button}
-          onClick={() => this.handleAddOrder(totalPrice)}>
-          Submit
-        </Button></h3>
-    
-        
-      </div>
-    );
+{if (this.state.totalPrice <= 0) {
+  return (
+    <h3>Your cart is empty now. Please, add products.</h3>
+  ) 
   }
 }
+
 return (
-  <h3>Your cart is empty now. Please, add products.</h3>
-) 
+  <div>
+    <Paper className={classes.root}>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <CustomTableCell>Your order</CustomTableCell>
+            <CustomTableCell>Price</CustomTableCell>
+            <CustomTableCell>Quantity of product</CustomTableCell>
+            <CustomTableCell>Total price</CustomTableCell>
+            <CustomTableCell>Delete</CustomTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {products.map(product => {
+            return (
+              <TableRow className={classes.row}>
+                <CustomTableCell component="th" scope="row">
+                  <h2>{product.productName}</h2>
+                  <br />
+                  category - {product.category}
+                  <br />
+                  color - {product.color}
+                </CustomTableCell>
+                <CustomTableCell>{product.price}$</CustomTableCell>
+                <CustomTableCell>
+                 
+                  <Button color="primary" className={classes.button} onClick={() => this.handleClickPlus(product.id)}>
+                    +
+              </Button>
+              {product.count}
+                  <Button color="secondary" className={classes.button} onClick={() => this.handleClickMinus(product.id)}>
+                    -
+               </Button>
+               
+               </CustomTableCell>
+               
+               <CustomTableCell>{product.count * product.price}$ </CustomTableCell>
+               <CustomTableCell>
+                  <Button variant="contained" color="secondary" className={classes.button} type="submit"
+                    onClick={() => this.deleteFromCart(product.id)}
+                  >Delete</Button>
+              </CustomTableCell>
+              
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </Paper>
+    <h3>Total price: {this.state.totalPrice} $ <Button variant="contained"  color="primary" className={classes.button}
+      onClick={() => this.handleAddOrder(totalPrice)}>
+      Submit
+    </Button></h3>
+    <Dialog
+      open={this.state.open}
+      onClose={this.handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+     
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+        Your order is accepted
+       </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => this.updateCart()} color="primary">
+          Ok
+       </Button>
+      </DialogActions>
+    </Dialog>
+
+    
+  </div>
+);
 }
 }
 

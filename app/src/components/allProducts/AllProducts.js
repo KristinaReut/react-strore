@@ -157,6 +157,7 @@ class AllProducts extends Component {
     
         );
       })}
+      
     </div>
     
      

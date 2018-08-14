@@ -39,13 +39,13 @@ class CategoriesTableRow extends Component {
 
       return (
         <TableRow>
-          <TableCell>
+          <TableCell >
             {index + 1}
           </TableCell>
           <TableCell>
             {category.name}
           </TableCell>
-          <TableCell>
+          <TableCell  style={{display: "flex", marginBottom: -1}}>
             <CategoriesDelete id={category.id} deleteCategory={this.deleteCategory} />
             <CategoriesEdit category={category} updateCategory={this.updateCategory}/>
           </TableCell>

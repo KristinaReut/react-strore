@@ -61,90 +61,94 @@ class App extends React.Component {
       this.state.products[index].count++
     }
   }
-
   handleClickPlus = (id) => {
     const products = this.state.products
     const index = this.state.products.findIndex(el => el.id === id)
     this.state.products[index].count++
     this.setState({ products })
   }
- 
+
   handleClickMinus = (id) => {
     const products = this.state.products
     const index = this.state.products.findIndex(el => el.id === id)
-    if (this.state.products[index].count != 1)
-   { this.state.products[index].count--
-    this.setState({ products }) }
+    if (this.state.products[index].count != 1) {
+      this.state.products[index].count--
+      this.setState({ products })
+    }
   }
- 
+
   deleteFromCart = (id) => {
     const products = this.state.products
     const index = this.state.products.findIndex(el => el.id === id)
-     products[index].count = 0
+    products[index].count = 0
     this.setState(prevState => ({
       products: prevState.products.filter(el => el.id != id),
     }));
   }
- updateCart = () => {
-    const products = this.state.products
-     products.count = 0
-  
+  updateCart = () => {
+    // const products = this.state.products
+    // products.count = 0
+    this.setState({
+      products: []
+    })
   }
 
 
-  
-  AllProducts = props => (
-    <AllProducts {...props} addProductInCart={this.addProductInCart} />
-  );
-  Cart = props => (
-    <Cart {...props} products={this.state.products} handleClickPlus={this.handleClickPlus} handleClickMinus={this.handleClickMinus} deleteFromCart={this.deleteFromCart} updateCart={this.updateCart}/>
-  );
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <Router>
-        <div className={classes.root}>
-          <AppBar position="absolute" className={classes.appBar}>
-            <Toolbar>
-              <Typography variant="title" color="inherit" noWrap>
-                E-commerce
+
+AllProducts = props => (
+  <AllProducts {...props} addProductInCart={this.addProductInCart} />
+);
+Cart = props => (
+  <Cart {...props} products={this.state.products} handleClickPlus={this.handleClickPlus}
+    handleClickMinus={this.handleClickMinus} deleteFromCart={this.deleteFromCart} updateCart={this.updateCart} />
+);
+
+render() {
+  const { classes } = this.props;
+  return (
+    <Router>
+      <div className={classes.root}>
+        <AppBar position="absolute" className={classes.appBar}>
+          <Toolbar>
+            <Typography variant="title" color="inherit" noWrap>
+              E-commerce
           </Typography>
-            </Toolbar>
-          </AppBar>
-          <Drawer
-            variant="permanent"
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-          >
-            <div className={classes.toolbar} />
-            <List component="nav">
-              <ListItem button component={props => <Link to="/" {...props} />}>
-                <ListItemIcon>
-                  <StarIcon />
-                </ListItemIcon>
-                <ListItemText>All Products</ListItemText>
-              </ListItem>
-              <ListItem button component={props => <Link to="/cart" {...props} />}>
-                <ListItemIcon>
-                  <StarIcon />
-                </ListItemIcon>
-                <ListItemText>Cart</ListItemText>
-              </ListItem>
-            </List>
-          </Drawer>
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            <Switch>
-              <Route exact path="/" component={this.AllProducts} />
-              <Route path="/cart" component={this.Cart} />
-            </Switch>
-          </main>
-        </div>
-      </Router>
-    );
-  }
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.toolbar} />
+          <List component="nav">
+            <ListItem button component={props => <Link to="/" {...props} />}>
+              <ListItemIcon>
+                <StarIcon />
+              </ListItemIcon>
+              <ListItemText>All Products</ListItemText>
+            </ListItem>
+            <ListItem button component={props => <Link to="/cart" {...props} />}>
+              <ListItemIcon>
+                <StarIcon />
+              </ListItemIcon>
+              <ListItemText>Cart</ListItemText>
+            </ListItem>
+          </List>
+        </Drawer>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Switch>
+            <Route exact path="/" component={this.AllProducts} />
+            <Route path="/cart" component={this.Cart} />
+          </Switch>
+        </main>
+      </div>
+    </Router>
+  );
+}
 }
 
 export default withStyles(styles)(App);

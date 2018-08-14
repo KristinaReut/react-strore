@@ -35,9 +35,6 @@ class ProductsTableRow extends Component {
     const { updateProduct } = this.props
     updateProduct(id, data)
   }
-
-
-
   handleChange = name => event => {
     this.setState({
       [name]: event.target.checked
@@ -59,7 +56,7 @@ class ProductsTableRow extends Component {
         <TableCell numeric>{product.price}$</TableCell>
         <TableCell numeric>{product.description}</TableCell>
         <TableCell numeric>{product.category}</TableCell>
-        <TableCell numeric>{product.image}</TableCell>
+        <TableCell numeric><img src={product.image} style={{width: "150%", height: "10%"}}/></TableCell>
         <TableCell numeric>{product.color}</TableCell>
         <TableCell numeric>
           <ProductsDelete id={product.id} deleteProduct={this.deleteProduct} />

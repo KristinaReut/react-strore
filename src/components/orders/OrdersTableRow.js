@@ -57,6 +57,9 @@ class OrdersTableRow extends Component {
             Color - {order.products[index].color}
             <br />
             Count  - {order.products[index].count}
+            <br />
+            Total price - {order.products[index].count*order.products[index].price} $
+            
             </li>
             </ul>
             )
